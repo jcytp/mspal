@@ -1,0 +1,7 @@
+[
+  ["/", "Login"],
+  ["/login", "Login"],
+  ["/register", "Register"],
+  ["/home", "Home"],
+  ["/*", "Login"]
+]
