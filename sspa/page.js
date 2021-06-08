@@ -11,7 +11,8 @@ export class page {
     if (page.components.has(component_id)) {
       return page.components.get(component_id)
     } else {
-      let component = (await import (`/components/${component_id}.js`)).cmp
+      const module = await import (`/components/${component_id}.js`)
+      const component = module ? (module.cmp ? module.cmp : null) : null
       page.components.set(component_id, component)
       return component
     }

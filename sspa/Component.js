@@ -19,6 +19,7 @@ export class Component {
     this.handler.set(name, handler)
   }
   lender(target_id) {
+    console.log('lender')
     // insert html into current page
   }
   async callAPI(name) {
