@@ -1,6 +1,6 @@
 import page from './page.js'
 
-export class API {
+export default class API {
   constructor(obj) {
     this.url = obj.url
     this.options = {}

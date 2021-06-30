@@ -1,6 +1,6 @@
 import page from './page.js'
 
-export class Handler {
+export default class Handler {
   constructor(obj) {
     this.target = obj.target
     this.type = obj.type

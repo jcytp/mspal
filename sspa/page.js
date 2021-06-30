@@ -1,4 +1,4 @@
-export class page {
+export default class page {
   static components = new Map()
   static special_elems = new Map([
     ["__window", window],
