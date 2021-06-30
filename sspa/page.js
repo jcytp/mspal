@@ -13,7 +13,7 @@ export class page {
   static class(elem_classname) {
     return Array.from(document.getElementsByClassName(elem_classname))
   }
-  async static loadComponent(component_id) {
+  static async loadComponent(component_id) {
     if (page.components.has(component_id)) {
       return page.components.get(component_id)
     } else {
