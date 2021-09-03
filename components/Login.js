@@ -3,7 +3,7 @@ import {
   API,
   Handler,
   page,
-} from "/sspa.js"
+} from "../sspa.js"
 
 const cmp = new Component('Login')
 
@@ -29,12 +29,14 @@ cmp.setHtml(`
 `)
 
 /* Child Components */
-cmp.addChild('header', page.loadComponent('Header'))
-cmp.addChild('footer', page.loadComponent('Footer'))
+cmp.addChild('header', 'Header')
+cmp.addChild('footer', 'Footer')
+// cmp.addChild('header', await page.loadComponent('Header'))
+// cmp.addChild('footer', await page.loadComponent('Footer'))
 
 /* APIs */
 cmp.addAPI('submit', new API({
-  url: '/login',
+  url: './login',
   method: 'POST',
   params: ['name', 'password'],
 }))
@@ -47,7 +49,7 @@ cmp.addHandler('submit', new Handler({
     ev.preventDefault()
     data = await cmp.callAPI('submit')
     if (data && data.code == 0) {
-      page.open('/home')
+      page.move('./home')
     } else {
       alert('Login failed.')
     }
@@ -58,7 +60,7 @@ cmp.addHandler('move_to_register', new Handler({
   type: 'click',
   listener: (ev) => {
     ev.preventDefault()
-    page.open('/register')
+    page.move('./register')
   },
 }))
 

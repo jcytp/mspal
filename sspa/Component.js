@@ -1,29 +1,42 @@
+import page from "./page.js"
+
 export default class Component {
   constructor(id) {
     this.id = id
     this.html = ''
-    this.child = new Map()
-    this.api = new Map()
-    this.handler = new Map()
+    this.children = new Map()
+    this.apis = new Map()
+    this.handlers = new Map()
   }
   setHtml(html) {
     this.html = html
   }
-  addChild(elem_id, component) {
-    this.child.set(elem_id, component)
+  addChild(elem_id, component_id) {
+    this.children.set(elem_id, component_id)
   }
   addAPI(name, api) {
-    this.api.set(name, api)
+    this.apis.set(name, api)
   }
   addHandler(name, handler) {
-    this.handler.set(name, handler)
+    this.handlers.set(name, handler)
   }
   lender(target_id) {
-    console.log('lender')
-    // insert html into current page
+    const node = page.id(target_id)
+    if (node) {
+      // html
+      node.innerHTML = this.html
+      // handlers
+      for (const [name, handler] of this.handlers) {
+        handlers.set()
+      }
+      // child components
+      for (const [id, cmp] of this.children) {
+        cmp.lender(id)
+      }
+    }
   }
   async callAPI(name) {
-    const api = this.api.get(name)
+    const api = this.apis.get(name)
     if (api) {
       return await api.call()
     }
