@@ -61,7 +61,7 @@ export default class page {
 
   static async open(component_id) {
     await page.loadComponents(component_id)
-    page.lenderComponents(page.id(root_id) ? root_id : "__body", component_id)
+    page.lenderComponents(page.id(this.root_id) ? this.root_id : "__body", component_id)
   }
 
   static init() {
