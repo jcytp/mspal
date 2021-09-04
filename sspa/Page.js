@@ -3,7 +3,7 @@ import API from "./API.js"
 import Handler from "./Handler.js"
 
 export default class Page {
-  constructor(obj) {
+  constructor(obj = {}) {
     this.domain = obj.domain ? obj.domain : document.location.host
     this.routes_path = obj.routes_path ? obj.routes_path : "../routes.json"
     this.root_id = obj.root_id ? obj.root_id : "sspa-root"
