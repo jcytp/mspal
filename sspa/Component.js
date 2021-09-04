@@ -38,9 +38,9 @@ export default class Component {
         const css_api = new API({
           url: `${Component.css_path}${css_id}.css` 
         })
-        const css_source = css_api.call()
+        const response = await css_api.call()
         const style = util.newElem("STYLE", "__html", `css_${css_id}`)
-        style.innerText = css_source
+        style.innerText = await response.text()
       }
       // handlers
       for (const [name, handler] of this.handlers) {
