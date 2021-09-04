@@ -30,9 +30,9 @@ export default class Component {
         handler.set()
       }
       // child components
-      for (const [id, cmp] of this.children) {
-        cmp.lender(id)
-      }
+      // for (const [id, cmp] of this.children) {
+      //   cmp.lender(id)
+      // }
     }
   }
   async callAPI(name) {
