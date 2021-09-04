@@ -36,8 +36,11 @@ export default class Page {
     }
   }
   findRoute(uri) {
+    console.debug(`### Page.findRoute(${uri})`)
     for (const [uri_pattern, component_id] of this.routes) {
+      console.debug(`Page.findRoute(${uri}) | check ${uri_pattern}`)
       if (util.matchRuleWild(uri, uri_pattern)) {
+        console.debug(`Page.findRoute(${uri}) | return ${component_id}`)
         return component_id
       }
     }
