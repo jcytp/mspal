@@ -2,8 +2,6 @@ import API from "./API.js"
 import util from "./util.js"
 
 export default class Component {
-  // static css_path = '../css/'
-
   constructor(id) {
     this.id = id
     this.html = ''
@@ -33,15 +31,6 @@ export default class Component {
     if (node) {
       // html
       node.innerHTML = this.html
-      // css
-      // for (const css_id of this.css) {
-      //   const css_api = new API({
-      //     url: `${Component.css_path}${css_id}.css` 
-      //   })
-      //   const response = await css_api.call()
-      //   const style = util.newElem("STYLE", "__html", `css_${css_id}`)
-      //   style.innerText = await response.text()
-      // }
       // handlers
       for (const [name, handler] of this.handlers) {
         handler.set()

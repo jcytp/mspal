@@ -58,6 +58,16 @@ export default class Page {
       for (const [id, cmp_id] of component.children) {
         await this.loadComponents(cmp_id)
       }
+      for (const css_id of component.styles) {
+        if (!this.styles.has(css_id)) {
+          const css_api = new API({
+            url: `${this.css_path}${css_id}.css`
+          })
+          const response = await css_api.call()
+          const css_source = await response.text()
+          this.styles.set(css_id, css_source)
+        }
+      }
     } else {
       console.error(`sspa Error: Components "${component_id}" Not Found.`)
     }
@@ -66,6 +76,12 @@ export default class Page {
   lenderComponents(target_id, component_id) {
     const component = this.components.get(component_id)
     component.lender(target_id)
+    for (const css_id of component.styles) {
+      if (!util.id(`css_${css_id}`)) {
+        const style = util.newElem("STYLE", "__html", `css_${css_id}`)
+        style.innerText = this.styles.get(css_id)
+      }
+    }
     for (const [id, cmp_id] of component.children) {
       this.lenderComponents(id, cmp_id)
     }
@@ -77,34 +93,34 @@ export default class Page {
     }
   }
 
-  async loadStyles(component_id) {
-    const component = this.components.get(component_id)
-    for (const css_id of component.styles) {
-      if (!this.styles.has(css_id)) {
-        const css_api = new API({
-          url: `${this.css_path}${css_id}.css`
-        })
-        const response = await css_api.call()
-        const css_source = await response.text()
-        this.styles.set(css_id, css_source)
-      }
-      if (!util.id(`css_${css_id}`)) {
-        const style = util.newElem("STYLE", "__html", `css_${css_id}`)
-        style.innerText = this.styles.get(css_id)
-      }
-    }
-    for (const [id, cmp_id] of component.children) {
-      this.loadStyles(cmp_id)
-    }
-  }
+  // async loadStyles(component_id) {
+  //   const component = this.components.get(component_id)
+  //   for (const css_id of component.styles) {
+  //     if (!this.styles.has(css_id)) {
+  //       const css_api = new API({
+  //         url: `${this.css_path}${css_id}.css`
+  //       })
+  //       const response = await css_api.call()
+  //       const css_source = await response.text()
+  //       this.styles.set(css_id, css_source)
+  //     }
+  //     if (!util.id(`css_${css_id}`)) {
+  //       const style = util.newElem("STYLE", "__html", `css_${css_id}`)
+  //       style.innerText = this.styles.get(css_id)
+  //     }
+  //   }
+  //   for (const [id, cmp_id] of component.children) {
+  //     this.loadStyles(cmp_id)
+  //   }
+  // }
 
   async open(component_id) {
     console.debug(`### Page.open(${component_id})`)
     await this.loadComponents(component_id)
-    this.lenderComponents(util.id(this.root_id) ? this.root_id : "__body", component_id)
     this.clearStyles()
-    await this.loadStyles(component_id)
-    console.log(this.styles)
+    this.lenderComponents(util.id(this.root_id) ? this.root_id : "__body", component_id)
+    // await this.loadStyles(component_id)
+    // console.log(this.styles)
   }
 
   /* ------------------------------------------------------------ */
