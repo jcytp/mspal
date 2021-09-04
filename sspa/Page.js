@@ -114,7 +114,7 @@ export default class Page {
   async init() {
     // ToDo: read from params.json
     // ToDo: read from routes.json
-    await loadRoutes()
+    await this.loadRoutes()
     // history.replaceState(path, "", path)
     // ToDo: find top component from routes
     const top_component_id = this.findRoute(document.location.pathname)
