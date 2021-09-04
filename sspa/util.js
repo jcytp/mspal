@@ -23,7 +23,7 @@ export default class util {
       not_regex.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
     }
     rule = "^" + rule.split("*").map(escapeRegex).join(".*") + "$"
-    regex = new RegExp(rule)
+    const regex = new RegExp(rule)
     return regex.test(str)
   }
 
