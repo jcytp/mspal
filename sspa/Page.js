@@ -8,6 +8,7 @@ export default class Page {
   constructor(obj = {}) {
     this.domain = obj.domain ? obj.domain : document.location.host
     this.routes_path = obj.routes_path ? obj.routes_path : "../routes.json"
+    this.css_path = obj.css_path ? obj.css_path : "../css/"
     this.root_id = obj.root_id ? obj.root_id : "sspa-root"
     this.routes = new Map()
     this.components = new Map()
@@ -81,7 +82,7 @@ export default class Page {
     for (const css_id of component.styles) {
       if (!this.styles.has(css_id)) {
         const css_api = new API({
-          url: `${Component.css_path}${css_id}.css`
+          url: `${this.css_path}${css_id}.css`
         })
         const response = await css_api.call()
         const css_source = await response.text()
