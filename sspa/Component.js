@@ -36,7 +36,7 @@ export default class Component {
       // css
       for (const css_id of this.css) {
         const css_api = new API({
-          url: `${this.css_path}${css_id}.css` 
+          url: `${Component.css_path}${css_id}.css` 
         })
         const css_source = css_api.call()
         const style = util.newElem("STYLE", "__html", `css_${css_id}`)
