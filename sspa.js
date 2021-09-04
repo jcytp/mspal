@@ -6,10 +6,12 @@ import Page from './sspa/Page.js'
 
 export { Component, API, Handler, Page }
 
-const page = new Page()
 const starter = new Handler({
   target: '__window',
   type: 'load',
-  listener: page.init
+  listener: (e) => {
+    const page = new Page()
+    page.init()
+  }
 })
 starter.set()
