@@ -22,6 +22,8 @@ export default class util {
     const escapeRegex = (not_regex) => {
       not_regex.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
     }
+    console.log(`rule.split("*") : ${rule.split("*")}`)
+    console.log(`rule.split("*").map(escapeRegex) : ${rule.split("*").map(escapeRegex)}`)
     rule = "^" + rule.split("*").map(escapeRegex).join(".*") + "$"
     const regex = new RegExp(rule)
     console.log(`str: ${str}`)
