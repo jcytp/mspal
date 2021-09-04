@@ -2,13 +2,13 @@ import API from "./API.js"
 import util from "./util.js"
 
 export default class Component {
-  static css_path = '../css/'
+  // static css_path = '../css/'
 
   constructor(id) {
     this.id = id
     this.html = ''
     this.children = new Map()
-    this.css = new Array()
+    this.styles = new Array()
     this.apis = new Map()
     this.handlers = new Map()
   }
@@ -18,8 +18,8 @@ export default class Component {
   addChild(elem_id, component_id) {
     this.children.set(elem_id, component_id)
   }
-  addCSS(css_id) {
-    this.css.push(css_id)
+  addStyle(css_id) {
+    this.styles.push(css_id)
   }
   addAPI(name, api) {
     this.apis.set(name, api)

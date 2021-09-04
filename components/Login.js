@@ -33,7 +33,7 @@ cmp.addChild('header', 'Header')
 cmp.addChild('footer', 'Footer')
 
 /* CSS */
-cmp.addCSS('main')
+cmp.addStyle('main')
 
 /* APIs */
 cmp.addAPI('submit', new API({
