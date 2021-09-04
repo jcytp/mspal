@@ -89,12 +89,6 @@ export default class Page {
     }
   }
 
-  // clearStyles() {
-  //   for (const [css_id, source] of this.styles) {
-  //     util.remove(`css_${css_id}`)
-  //   }
-  // }
-
   setUnusedStylesFlag() {
     for (const [css_id, source] of this.styles) {
       const node = util.id(`css_${css_id}`)
@@ -106,7 +100,7 @@ export default class Page {
   removeUnusedStyles() {
     const remove_list = util.class("sspa_unused_style")
     for (const node of remove_list) {
-      node.parentNode.removeChild(noe)
+      node.parentNode.removeChild(node)
     }
   }
 
