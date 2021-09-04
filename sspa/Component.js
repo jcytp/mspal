@@ -39,7 +39,7 @@ export default class Component {
           url: `${this.css_path}${css_id}.css` 
         })
         const css_source = css_api.call()
-        const style = util.newElem("STYLE", parent="__html", id=`css_${css_id}`)
+        const style = util.newElem("STYLE", "__html", `css_${css_id}`)
         style.innerText = css_source
       }
       // handlers
