@@ -36,7 +36,7 @@ cmp.addChild('footer', 'Footer')
 
 /* APIs */
 cmp.addAPI('submit', new API({
-  url: './login',
+  url: '/login',
   method: 'POST',
   params: ['name', 'password'],
 }))
@@ -49,7 +49,7 @@ cmp.addHandler('submit', new Handler({
     ev.preventDefault()
     data = await cmp.callAPI('submit')
     if (data && data.code == 0) {
-      Page.move('./home')
+      Page.move('/home')
     } else {
       alert('Login failed.')
     }
@@ -60,7 +60,7 @@ cmp.addHandler('move_to_register', new Handler({
   type: 'click',
   listener: (ev) => {
     ev.preventDefault()
-    Page.move('./register')
+    Page.move('/register')
   },
 }))
 
