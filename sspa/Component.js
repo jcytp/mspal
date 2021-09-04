@@ -25,9 +25,7 @@ export default class Component {
     const node = util.id(target_id)
     if (node) {
       // html
-      console.debug(`${node.innerHTML}`)
       node.innerHTML = this.html
-      console.debug(`${node.innerHTML}`)
       // handlers
       for (const [name, handler] of this.handlers) {
         handler.set()

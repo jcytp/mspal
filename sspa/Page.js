@@ -82,12 +82,11 @@ export default class Page {
   static async init() {
     console.debug(`### Page.init()`)
     // ToDo: read from params.json
-    if (!Page.instans) {
-      Page.instans = new Page()
-      // # read from routes.json
-      await Page.instans.loadRoutes()
-    }
+    Page.instans = new Page()
     const page = Page.instans
+    // # read from routes.json
+    await page.loadRoutes()
+    page.back_handler.set()
     const top_component_id = page.findRoute(document.location.pathname)
     if (!top_component_id) {
       console.error(`page initialize error | component for this uri not defined.`)

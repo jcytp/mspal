@@ -20,8 +20,23 @@ cmp.setHtml(`
       </div>
       <input type="submit" id="submit" value="Register" />
     </form>
+    <p>Do you have an account? <a href="/login" class="clsMoveToLogin">Login</a></p>
   </main>
   <footer id="footer"></footer>
 `)
+
+/* Child Components */
+cmp.addChild('header', 'Header')
+cmp.addChild('footer', 'Footer')
+
+/* Event Handlers */
+cmp.addHandler('move_to_login', new Handler({
+  target: 'clsMoveToLogin',
+  type: 'click',
+  listener: (ev) => {
+    ev.preventDefault()
+    Page.move('/login')
+  },
+}))
 
 export default cmp

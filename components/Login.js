@@ -23,7 +23,7 @@ cmp.setHtml(`
       </div>
       <input type="submit" id="submit" value="Login" />
     </form>
-    <p>Don't have an account? <a href="/register" class="clsOpenRegister">Register</a></p>
+    <p>Don't have an account? <a href="/register" class="clsMoveToRegister">Register</a></p>
   </main>
   <footer id="footer"></footer>
 `)
@@ -31,8 +31,6 @@ cmp.setHtml(`
 /* Child Components */
 cmp.addChild('header', 'Header')
 cmp.addChild('footer', 'Footer')
-// cmp.addChild('header', await page.loadComponent('Header'))
-// cmp.addChild('footer', await page.loadComponent('Footer'))
 
 /* APIs */
 cmp.addAPI('submit', new API({
@@ -56,7 +54,7 @@ cmp.addHandler('submit', new Handler({
   },
 }))
 cmp.addHandler('move_to_register', new Handler({
-  target: 'clsOpenRegister',
+  target: 'clsMoveToRegister',
   type: 'click',
   listener: (ev) => {
     ev.preventDefault()
