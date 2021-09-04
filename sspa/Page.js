@@ -99,7 +99,7 @@ export default class Page {
   static async move(path) {
     console.debug(`### Page.move(${path})`)
     const page = Page.instans
-    const top_component_id = page.findRoute(document.location.pathname)
+    const top_component_id = page.findRoute(path)
     if (!top_component_id) {
       console.error(`page move error | component for next uri not defined.`)
       return
