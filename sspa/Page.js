@@ -106,7 +106,7 @@ export default class Page {
 
   async open(component_id) {
     await this.loadComponents(component_id)
-    this.lenderComponents(this.id(this.root_id) ? this.root_id : "__body", component_id)
+    this.lenderComponents(util.id(this.root_id) ? this.root_id : "__body", component_id)
   }
 
   /* ------------------------------------------------------------ */
