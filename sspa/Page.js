@@ -97,8 +97,9 @@ export default class Page {
 
   setUnusedStylesFlag() {
     for (const [css_id, source] of this.styles) {
-      if (util.id(css_id)) {
-        util.id(css_id).className = "sspa_unused_style"
+      const node = util.id(`css_${css_id}`)
+      if (node) {
+        node.className = "sspa_unused_style"
       }
     }
   }
