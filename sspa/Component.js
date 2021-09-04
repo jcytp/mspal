@@ -3,7 +3,7 @@ import util from "./util.js"
 
 export default class Component {
   static css_path = '../css/'
-  
+
   constructor(id) {
     this.id = id
     this.html = ''
@@ -38,7 +38,7 @@ export default class Component {
         const css_api = new API({
           url: `${this.css_path}${css_id}.css` 
         })
-        css_source = css_api.call()
+        const css_source = css_api.call()
         util.id("__html").appendChild()
         const style = util.newElem("STYLE", parent="__html", id=`css_${css_id}`)
         style.innerText = css_source
