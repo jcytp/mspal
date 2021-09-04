@@ -47,8 +47,10 @@ export default class Page {
 
   async loadComponents(component_id) {
     if (this.components.has(component_id)) {
-      return this.components.get(component_id)
-    } else {
+      return
+    }
+    //   return this.components.get(component_id)
+    // } else {
       const module = await import (`../components/${component_id}.js`)
       const component = module ? (module.default ? module.default : null) : null
       if (component) {
@@ -59,8 +61,8 @@ export default class Page {
       } else {
         console.error(`sspa Error: Components "${component_id}" Not Found.`)
       }
-      return component
-    }
+    //   return component
+    // }
   }
 
   lenderComponents(target_id, component_id) {

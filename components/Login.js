@@ -32,6 +32,9 @@ cmp.setHtml(`
 cmp.addChild('header', 'Header')
 cmp.addChild('footer', 'Footer')
 
+/* CSS */
+cmp.addCSS('main')
+
 /* APIs */
 cmp.addAPI('submit', new API({
   url: '/login',
