@@ -1,5 +1,7 @@
 import {
   Component,
+  Handler,
+  Page,
 } from "../sspa.js"
 
 const cmp = new Component('Register')
