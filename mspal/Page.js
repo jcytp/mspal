@@ -3,13 +3,16 @@ import API from "./API.js"
 import Handler from "./Handler.js"
 
 export default class Page {
-  static instans = null
+  static instance = null
 
   constructor(obj = {}) {
     this.domain = obj.domain ? obj.domain : document.location.host
     this.routes_path = obj.routes_path ? obj.routes_path : "../routes.json"
-    this.css_path = obj.css_path ? obj.css_path : "../css/"
-    this.root_id = obj.root_id ? obj.root_id : "sspa-root"
+    this.components_path = obj.components_path ? obj.components_path : "../components/"
+    this.style_path = obj.style_path ? obj.style_path : "../css/"
+    this.root_id = obj.root_id ? obj.root_id : "spa-root"
+    this.history_prefix = obj.history_prefix ? obj.history_prefix : "mspal"
+    this.unused_style_class = obj.unused_style_class ? obj.unused_style_class : "mspal_unused_style"
     this.routes = new Map()
     this.components = new Map()
     this.styles = new Map()
@@ -17,9 +20,10 @@ export default class Page {
       target: "__window",
       type: "popstate",
       listener: async (ev) => {
-        if (this.domain == document.location.host && ev.state.startsWith("sspa|")) {
+        const page = Page.instance
+        if (page.domain == document.location.host && ev.state.startsWith(page.history_prefix)) {
           const top_component_id = ev.state.substr(5)
-          this.open(top_component_id)
+          page.open(top_component_id)
         }
       }
     })
@@ -51,37 +55,37 @@ export default class Page {
     if (this.components.has(component_id)) {
       return
     }
-    const module = await import (`../components/${component_id}.js`)
+    const module = await import (`${this.components_path}${component_id}.js`)
     const component = module ? (module.default ? module.default : null) : null
     if (component) {
       this.components.set(component_id, component)
       for (const [id, cmp_id] of component.children) {
         await this.loadComponents(cmp_id)
       }
-      for (const css_id of component.styles) {
-        if (!this.styles.has(css_id)) {
-          const css_api = new API({
-            url: `${this.css_path}${css_id}.css`
+      for (const style_id of component.styles) {
+        if (!this.styles.has(style_id)) {
+          const style_api = new API({
+            url: `${this.style_path}${style_id}.css`
           })
-          const response = await css_api.call()
-          const css_source = await response.text()
-          this.styles.set(css_id, css_source)
+          const response = await style_api.call()
+          const style_source = await response.text()
+          this.styles.set(style_id, style_source)
         }
       }
     } else {
-      console.error(`sspa Error: Components "${component_id}" Not Found.`)
+      console.error(`Page.loadComponents() load module error | component_id: ${component_id}`)
     }
   }
 
   lenderComponents(target_id, component_id) {
     const component = this.components.get(component_id)
     component.lender(target_id)
-    for (const css_id of component.styles) {
-      if (!util.id(`css_${css_id}`)) {
-        const style = util.newElem("STYLE", "__html", `css_${css_id}`)
-        style.innerText = this.styles.get(css_id)
+    for (const style_id of component.styles) {
+      if (!util.id(`style_${style_id}`)) {
+        const style = util.newElem("STYLE", "__html", `style_${style_id}`)
+        style.innerText = this.styles.get(style_id)
       } else {
-        util.id(`css_${css_id}`).className = ""
+        util.id(`style_${style_id}`).className = ""
       }
     }
     for (const [id, cmp_id] of component.children) {
@@ -90,15 +94,15 @@ export default class Page {
   }
 
   setUnusedStylesFlag() {
-    for (const [css_id, source] of this.styles) {
-      const node = util.id(`css_${css_id}`)
+    for (const [style_id, source] of this.styles) {
+      const node = util.id(`style_${style_id}`)
       if (node) {
-        node.className = "sspa_unused_style"
+        node.className = this.unused_style_class
       }
     }
   }
   removeUnusedStyles() {
-    const remove_list = util.class("sspa_unused_style")
+    const remove_list = util.class(this.unused_style_class)
     for (const node of remove_list) {
       node.parentNode.removeChild(node)
     }
@@ -117,8 +121,8 @@ export default class Page {
   static async init() {
     console.debug(`### Page.init()`)
     // ToDo: read from params.json
-    Page.instans = new Page()
-    const page = Page.instans
+    Page.instance = new Page()
+    const page = Page.instance
     // # read from routes.json
     await page.loadRoutes()
     page.back_handler.set()
@@ -127,19 +131,19 @@ export default class Page {
       console.error(`page initialize error | component for this uri not defined.`)
       return
     }
-    history.replaceState(`sspa|${top_component_id}`, "", document.location.pathname)
+    history.replaceState(`${page.history_prefix}${top_component_id}`, "", document.location.pathname)
     page.open(top_component_id)
   }
 
   static async move(path) {
     console.debug(`### Page.move(${path})`)
-    const page = Page.instans
+    const page = Page.instance
     const top_component_id = page.findRoute(path)
     if (!top_component_id) {
       console.error(`page move error | component for next uri not defined.`)
       return
     }
-    history.pushState(`sspa|${top_component_id}`, "", path)
+    history.pushState(`${page.history_prefix}${top_component_id}`, "", path)
     page.open(top_component_id)
   }
 }

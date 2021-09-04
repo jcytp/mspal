@@ -1,12 +1,12 @@
 import {
   Component,
-} from "../sspa.js"
+} from "../mspal.js"
 
 const cmp = new Component('Header')
 
 /* HTML */
 cmp.setHtml(`
-  <h1>sspa - sample</h1>
+  <h1>mspal - sample</h1>
 `)
 
 export default cmp

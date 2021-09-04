@@ -3,7 +3,7 @@ import {
   API,
   Handler,
   Page,
-} from "../sspa.js"
+} from "../mspal.js"
 
 const cmp = new Component('Login')
 

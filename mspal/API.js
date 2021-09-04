@@ -27,7 +27,7 @@ export default class API {
     }
     switch (this.options.method) {
       case 'GET':
-        // append params to url
+        // ToDo: append params to url
         break
       case 'POST':
       case 'PUT':
@@ -36,8 +36,7 @@ export default class API {
     }
     const response = await fetch(url, this.options)
     if (!response.ok) {
-      console.error(`API.call() response error | url: ${this.url}, method: ${this.options.method}, params: ${this.params}`)
-      // throw new Error('sspa api response was not OK')
+      console.error(`API.call() api response error | url: ${this.url}, method: ${this.options.method}, params: ${this.params}`)
     }
     return response
   }

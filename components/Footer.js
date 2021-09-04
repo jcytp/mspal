@@ -1,6 +1,6 @@
 import {
   Component,
-} from "../sspa.js"
+} from "../mspal.js"
 
 const cmp = new Component('Footer')
 
