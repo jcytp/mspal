@@ -34,14 +34,14 @@ export default class Component {
       // html
       node.innerHTML = this.html
       // css
-      for (const css_id of this.css) {
-        const css_api = new API({
-          url: `${Component.css_path}${css_id}.css` 
-        })
-        const response = await css_api.call()
-        const style = util.newElem("STYLE", "__html", `css_${css_id}`)
-        style.innerText = await response.text()
-      }
+      // for (const css_id of this.css) {
+      //   const css_api = new API({
+      //     url: `${Component.css_path}${css_id}.css` 
+      //   })
+      //   const response = await css_api.call()
+      //   const style = util.newElem("STYLE", "__html", `css_${css_id}`)
+      //   style.innerText = await response.text()
+      // }
       // handlers
       for (const [name, handler] of this.handlers) {
         handler.set()

@@ -8,6 +8,17 @@ export default class util {
     ["__body", document.getElementsByTagName("BODY")[0]],
   ])
 
+  static id(elem_id) {
+    if (this.special_elems.has(elem_id)) {
+      return this.special_elems.get(elem_id)
+    }
+    return document.getElementById(elem_id)
+  }
+  
+  static class(elem_classname) {
+    return Array.from(document.getElementsByClassName(elem_classname))
+  }
+
   static newElem(node_name, parent=null, id=null, class_name=null) {
     const elem = document.createElement(node_name)
     if (parent) {
@@ -22,15 +33,9 @@ export default class util {
     return elem
   }
 
-  static id(elem_id) {
-    if (this.special_elems.has(elem_id)) {
-      return this.special_elems.get(elem_id)
-    }
-    return document.getElementById(elem_id)
-  }
-  
-  static class(elem_classname) {
-    return Array.from(document.getElementsByClassName(elem_classname))
+  static remove(elem_id) {
+    const elem = this.id(elem_id)
+    elem.parentNode.removeChild(elem)
   }
 
   static matchRuleWild(str, rule) {

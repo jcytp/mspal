@@ -11,6 +11,7 @@ export default class Page {
     this.root_id = obj.root_id ? obj.root_id : "sspa-root"
     this.routes = new Map()
     this.components = new Map()
+    this.styles = new Map()
     this.back_handler = new Handler({
       target: "__window",
       type: "popstate",
@@ -49,20 +50,16 @@ export default class Page {
     if (this.components.has(component_id)) {
       return
     }
-    //   return this.components.get(component_id)
-    // } else {
-      const module = await import (`../components/${component_id}.js`)
-      const component = module ? (module.default ? module.default : null) : null
-      if (component) {
-        this.components.set(component_id, component)
-        for (const [id, cmp_id] of component.children) {
-          await this.loadComponents(cmp_id)
-        }
-      } else {
-        console.error(`sspa Error: Components "${component_id}" Not Found.`)
+    const module = await import (`../components/${component_id}.js`)
+    const component = module ? (module.default ? module.default : null) : null
+    if (component) {
+      this.components.set(component_id, component)
+      for (const [id, cmp_id] of component.children) {
+        await this.loadComponents(cmp_id)
       }
-    //   return component
-    // }
+    } else {
+      console.error(`sspa Error: Components "${component_id}" Not Found.`)
+    }
   }
 
   lenderComponents(target_id, component_id) {
@@ -73,10 +70,39 @@ export default class Page {
     }
   }
 
+  clearStyles() {
+    for (const [css_id, source] of this.styles) {
+      util.remove(`css_${css_id}`)
+    }
+  }
+
+  async loadStyles(component_id) {
+    const component = this.components.get(component_id)
+    for (const css_id of component.styles) {
+      if (!this.styles.has(css_id)) {
+        const css_api = new API({
+          url: `${Component.css_path}${css_id}.css`
+        })
+        const response = await css_api.call()
+        const css_source = await response.text()
+        this.styles.set(css_id, css_source)
+      }
+      if (!util.id(`css_${css_id}`)) {
+        const style = util.newElem("STYLE", "__html", `css_${css_id}`)
+        style.innerText = this.styles.get(css_id)
+      }
+    }
+    for (const [id, cmp_id] of component.children) {
+      this.loadStyles(cmp_id)
+    }
+  }
+
   async open(component_id) {
     console.debug(`### Page.open(${component_id})`)
     await this.loadComponents(component_id)
     this.lenderComponents(util.id(this.root_id) ? this.root_id : "__body", component_id)
+    this.clearStyles()
+    await this.loadStyles(component_id)
   }
 
   /* ------------------------------------------------------------ */
