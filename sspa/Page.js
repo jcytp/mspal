@@ -71,6 +71,7 @@ export default class Page {
   }
 
   async open(component_id) {
+    console.debug(`### Page.open(${component_id})`)
     await this.loadComponents(component_id)
     this.lenderComponents(util.id(this.root_id) ? this.root_id : "__body", component_id)
   }
@@ -78,6 +79,7 @@ export default class Page {
   /* ------------------------------------------------------------ */
 
   static async init() {
+    console.debug(`### Page.init()`)
     // ToDo: read from params.json
     if (!this.instans) {
       this.instans = new Page()
@@ -95,6 +97,7 @@ export default class Page {
   }
 
   static async move(path) {
+    console.debug(`### Page.move(${path})`)
     const page = this.instans
     const top_component_id = page.findRoute(document.location.pathname)
     if (!top_component_id) {

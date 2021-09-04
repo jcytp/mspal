@@ -8,6 +8,7 @@ export default class Handler {
     this.options = obj.options || {}
   }
   set() {
+    console.debug(`### Handler.set() | target: ${this.target}, type: ${this.type}`)
     const id_elem = util.id(this.target)
     const elems = id_elem ? [id_elem] : util.class(this.target)
     for (const elem of elems) {

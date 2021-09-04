@@ -21,6 +21,7 @@ export default class Component {
     this.handlers.set(name, handler)
   }
   lender(target_id) {
+    console.debug(`### Component.lender(${target_id})`)
     const node = util.id(target_id)
     if (node) {
       // html
@@ -29,10 +30,6 @@ export default class Component {
       for (const [name, handler] of this.handlers) {
         handler.set()
       }
-      // child components
-      // for (const [id, cmp] of this.children) {
-      //   cmp.lender(id)
-      // }
     }
   }
   async callAPI(name) {
