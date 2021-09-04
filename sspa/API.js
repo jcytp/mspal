@@ -1,4 +1,4 @@
-import page from './page.js'
+import util from './util.js'
 
 export default class API {
   constructor(obj) {
@@ -11,11 +11,11 @@ export default class API {
     this.params = obj.params ? obj.params : []
   }
   async call() {
-    console.log(`api call | url: ${this.url}, params: ${this.params}`)
+    console.log(`api call | url: ${this.url}, method: ${this.method}, params: ${this.params}`)
     const params = {}
     let url = this.url
     for (const elem_id of this.params) {
-      const elem = page.id(elem_id)
+      const elem = util.id(elem_id)
       if (elem) {
         switch (elem.tagName) {
           case 'INPUT':
@@ -35,5 +35,10 @@ export default class API {
         break
     }
     const response = await fetch(url, this.options)
+    if (!response.ok) {
+      console.error(`api response error | url: ${this.url}, method: ${this.method}, params: ${this.params}`)
+      // throw new Error('sspa api response was not OK')
+    }
+    return response
   }
 }

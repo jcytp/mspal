@@ -1,4 +1,4 @@
-import page from "./page.js"
+import util from "./util.js"
 
 export default class Component {
   constructor(id) {
@@ -21,13 +21,13 @@ export default class Component {
     this.handlers.set(name, handler)
   }
   lender(target_id) {
-    const node = page.id(target_id)
+    const node = util.id(target_id)
     if (node) {
       // html
       node.innerHTML = this.html
       // handlers
       for (const [name, handler] of this.handlers) {
-        handlers.set()
+        handler.set()
       }
       // child components
       for (const [id, cmp] of this.children) {

@@ -2,13 +2,13 @@
 import Component from './sspa/Component.js'
 import API from './sspa/API.js'
 import Handler from './sspa/Handler.js'
-import page from './sspa/page.js'
+import Page from './sspa/Page.js'
 
-export { Component, API, Handler, page }
+export { Component, API, Handler, Page }
 
 const starter = new Handler({
   target: '__window',
   type: 'load',
-  listener: page.init
+  listener: Page.init
 })
 starter.set()
