@@ -82,7 +82,7 @@ export default class Page {
     if (!this.instans) {
       this.instans = new Page()
       // # read from routes.json
-      await page.loadRoutes()
+      await this.instans.loadRoutes()
     }
     const page = this.instans
     const top_component_id = page.findRoute(document.location.pathname)
