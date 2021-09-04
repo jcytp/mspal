@@ -81,12 +81,12 @@ export default class Page {
   static async init() {
     console.debug(`### Page.init()`)
     // ToDo: read from params.json
-    if (!this.instans) {
-      this.instans = new Page()
+    if (!Page.instans) {
+      Page.instans = new Page()
       // # read from routes.json
-      await this.instans.loadRoutes()
+      await Page.instans.loadRoutes()
     }
-    const page = this.instans
+    const page = Page.instans
     const top_component_id = page.findRoute(document.location.pathname)
     if (!top_component_id) {
       console.error(`page initialize error | component for this uri not defined.`)
@@ -98,7 +98,7 @@ export default class Page {
 
   static async move(path) {
     console.debug(`### Page.move(${path})`)
-    const page = this.instans
+    const page = Page.instans
     const top_component_id = page.findRoute(document.location.pathname)
     if (!top_component_id) {
       console.error(`page move error | component for next uri not defined.`)
