@@ -11,7 +11,7 @@ export default class API {
     this.params = obj.params ? obj.params : []
   }
   async call() {
-    console.log(`api call | url: ${this.url}, method: ${this.method}, params: ${this.params}`)
+    console.log(`api call | url: ${this.url}, method: ${this.options.method}, params: ${this.params}`)
     const params = {}
     let url = this.url
     for (const elem_id of this.params) {
@@ -36,7 +36,7 @@ export default class API {
     }
     const response = await fetch(url, this.options)
     if (!response.ok) {
-      console.error(`api response error | url: ${this.url}, method: ${this.method}, params: ${this.params}`)
+      console.error(`api response error | url: ${this.url}, method: ${this.options.method}, params: ${this.params}`)
       // throw new Error('sspa api response was not OK')
     }
     return response

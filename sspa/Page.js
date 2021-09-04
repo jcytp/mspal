@@ -3,6 +3,8 @@ import API from "./API.js"
 import Handler from "./Handler.js"
 
 export default class Page {
+  static instans = null
+
   constructor(obj = {}) {
     this.domain = obj.domain ? obj.domain : document.location.host
     this.routes_path = obj.routes_path ? obj.routes_path : "../routes.json"
@@ -20,42 +22,6 @@ export default class Page {
       }
     })
   }
-
-
-
-  // static domain = document.location.host
-  // static routes = new Map()
-  // static components = new Map()
-
-  // static routes_path = "../routes.json"
-  // static root_id = "sspa-root"
-
-  // static special_elems = new Map([
-  //   ["__window", window],
-  //   ["__body", document.getElementsByTagName("BODY")[0]],
-  // ])
-
-  // static back_handler = new Handler({
-  //   target: "__window",
-  //   type: "popstate",
-  //   listener: async (ev) => {
-  //     if (page.domain == document.location.host && ev.state.startsWith("sspa|")) {
-  //       top_component_id = ev.state.substr(5)
-  //       page.open(top_component_id)
-  //     }
-  //   }
-  // })
-
-  // static id(elem_id) {
-  //   if (page.special_elems.has(elem_id)) {
-  //     return page.special_elems.get(elem_id)
-  //   }
-  //   return document.getElementById(elem_id)
-  // }
-
-  // static class(elem_classname) {
-  //   return Array.from(document.getElementsByClassName(elem_classname))
-  // }
 
   /* ------------------------------------------------------------ */
 
@@ -111,45 +77,31 @@ export default class Page {
 
   /* ------------------------------------------------------------ */
 
-  async init() {
+  static async init() {
     // ToDo: read from params.json
-    // ToDo: read from routes.json
-    await this.loadRoutes()
-    // history.replaceState(path, "", path)
-    // ToDo: find top component from routes
-    const top_component_id = this.findRoute(document.location.pathname)
+    if (!this.instans) {
+      this.instans = new Page()
+      // # read from routes.json
+      await page.loadRoutes()
+    }
+    const page = this.instans
+    const top_component_id = page.findRoute(document.location.pathname)
     if (!top_component_id) {
       console.error(`page initialize error | component for this uri not defined.`)
+      return
     }
-    // const top_component_id = "Login"
     history.replaceState(`sspa|${top_component_id}`, "", document.location.pathname)
     this.open(top_component_id)
-    // const top_component_id = "Login"
-    // await page.loadComponents(top_component_id)
-    // page.lenderComponents(page.id("sspa-root") ? "sspa-root" : "__body", top_component_id)
-    // const component = await page.loadComponent(component_id)
-    // if (component) {
-    //   component.lender(page.id("sspa-root") ? "sspa-root" : "__body")
-    //   for (const [id, cmp_id] of component.children) {
-    //     const cmp = await page.loadComponent(cmp_id)
-    //     cmp.lender(id)
-    //   }
-    // }
   }
 
-  move(path) {
-    // ToDo: find top component from routes
-    const top_component_id = "Register"
+  static async move(path) {
+    const page = this.instans
+    const top_component_id = page.findRoute(document.location.pathname)
+    if (!top_component_id) {
+      console.error(`page move error | component for next uri not defined.`)
+      return
+    }
     history.pushState(`sspa|${top_component_id}`, "", path)
     this.open(top_component_id)
-    // const top_component_id = "Register"
-    // await page.loadComponents(top_component_id)
-    // page.lenderComponents(page.id("sspa-root") ? "sspa-root" : "__body", top_component_id)
-
-
-    // const component = await page.loadComponent(component_id)
-    // if (component) {
-    //   component.lender(page.id("sspa-root") ? "sspa-root" : "__body")
-    // }
   }
 }
