@@ -71,7 +71,6 @@ export default class Page {
   }
   findRoute(uri) {
     for (const [uri_pattern, component_id] of this.routes) {
-      console.log(`uri = ${uri}, uri_pattern = ${uri_pattern}`)
       if (util.matchRuleWild(uri, uri_pattern)) {
         return component_id
       }

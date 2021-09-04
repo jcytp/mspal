@@ -2,7 +2,7 @@ import {
   Component,
   API,
   Handler,
-  page,
+  Page,
 } from "../sspa.js"
 
 const cmp = new Component('Login')
@@ -49,7 +49,7 @@ cmp.addHandler('submit', new Handler({
     ev.preventDefault()
     data = await cmp.callAPI('submit')
     if (data && data.code == 0) {
-      page.move('./home')
+      Page.move('./home')
     } else {
       alert('Login failed.')
     }
@@ -60,7 +60,7 @@ cmp.addHandler('move_to_register', new Handler({
   type: 'click',
   listener: (ev) => {
     ev.preventDefault()
-    page.move('./register')
+    Page.move('./register')
   },
 }))
 
