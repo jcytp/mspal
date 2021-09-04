@@ -24,6 +24,9 @@ export default class util {
     }
     rule = "^" + rule.split("*").map(escapeRegex).join(".*") + "$"
     const regex = new RegExp(rule)
+    console.log(`str: ${str}`)
+    console.log(`rule: ${rule}`)
+    console.log(`${regex.test(str) ? 'matched' : 'NOT matched'}`)
     return regex.test(str)
   }
 
