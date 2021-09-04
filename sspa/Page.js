@@ -103,6 +103,7 @@ export default class Page {
     this.lenderComponents(util.id(this.root_id) ? this.root_id : "__body", component_id)
     this.clearStyles()
     await this.loadStyles(component_id)
+    console.log(this.styles)
   }
 
   /* ------------------------------------------------------------ */
