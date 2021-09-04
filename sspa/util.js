@@ -35,7 +35,9 @@ export default class util {
 
   static remove(elem_id) {
     const elem = this.id(elem_id)
-    elem.parentNode.removeChild(elem)
+    if (elem) {
+      elem.parentNode.removeChild(elem)
+    }
   }
 
   static matchRuleWild(str, rule) {
