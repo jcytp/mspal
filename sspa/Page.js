@@ -93,7 +93,7 @@ export default class Page {
       return
     }
     history.replaceState(`sspa|${top_component_id}`, "", document.location.pathname)
-    this.open(top_component_id)
+    page.open(top_component_id)
   }
 
   static async move(path) {
@@ -105,6 +105,6 @@ export default class Page {
       return
     }
     history.pushState(`sspa|${top_component_id}`, "", path)
-    this.open(top_component_id)
+    page.open(top_component_id)
   }
 }
