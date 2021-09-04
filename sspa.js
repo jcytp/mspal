@@ -9,9 +9,6 @@ export { Component, API, Handler, Page }
 const starter = new Handler({
   target: '__window',
   type: 'load',
-  listener: (e) => {
-    const page = new Page()
-    page.init()
-  }
+  listener: Page.init
 })
 starter.set()
