@@ -20,12 +20,12 @@ export default class util {
 
   static matchRuleWild(str, rule) {
     const escapeRegex = (not_regex) => {
-      not_regex.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
+      return not_regex.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
     }
-    // console.log(`escapeRegex('/login') : ${escapeRegex('/login')}`)
-    console.log(rule.split("*"))
-    console.log(rule.split("*").map(escapeRegex))
-    // console.log(`rule.split("*").map(escapeRegex) : ${rule.split("*").map(escapeRegex)}`)
+    // // console.log(`escapeRegex('/login') : ${escapeRegex('/login')}`)
+    // console.log(rule.split("*"))
+    // console.log(rule.split("*").map(escapeRegex))
+    // // console.log(`rule.split("*").map(escapeRegex) : ${rule.split("*").map(escapeRegex)}`)
     rule = "^" + rule.split("*").map(escapeRegex).join(".*") + "$"
     const regex = new RegExp(rule)
     console.log(`str: ${str}`)
