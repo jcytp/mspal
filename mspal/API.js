@@ -32,7 +32,7 @@ export default class API {
     // while (re.test(url)) {
     if (re.test(url)) {
       console.debug(`url: ${url}`)
-      const key = re.exec(url)[0].substring(1, -1)
+      const key = re.exec(url)[0].slice(1, -1)
       console.debug(`key: ${key}`)
       console.debug(`params_map: ${[...params_map]}`)
       if (params_map.has(key)) {
