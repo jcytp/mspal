@@ -57,7 +57,7 @@ cmp.addHandler('btn_ghibli_people', new Handler({
       table.innerHTML = '<thead><tr><td>name</td><td>gender</td><td>age</td><td>films</td></tr></thead>'
       for (const entry of data) {
         const films = new Array()
-        for (film_url of entry.films) {
+        for (const film_url of entry.films) {
           const film_id = film_url.split('/').slice(-1)[0]
           const film_result = await cmp.callAPI('get_ghibli_film', new Map([['film-id', film_id]]))
           const film_data = film_result ? await film_result.json() : null
