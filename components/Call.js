@@ -55,14 +55,17 @@ cmp.addHandler('btn_ghibli_people', new Handler({
     if (data) {
       const table = document.getElementById('tblGhibliPeople')
       table.innerHTML = '<thead><tr><td>name</td><td>gender</td><td>age</td><td>films</td></tr></thead>'
+      const films_map = new Map()
       for (const entry of data) {
-        const films = new Array()
+        const entry_films = new Array()
         for (const film_url of entry.films) {
           const film_id = film_url.split('/').slice(-1)[0]
-          const film_result = await cmp.callAPI('get_ghibli_film', new Map([['film-id', film_id]]))
-          const film_data = film_result ? await film_result.json() : null
-          if (film_data) {
-            films.push(film_data.title)
+          if (films_map.has(film_id)) {
+            entry_films.push(films_map.get(film_id))
+          } else {
+            const film_result = await cmp.callAPI('get_ghibli_film', new Map([['film-id', film_id]]))
+            const film_data = film_result ? await film_result.json() : null
+            entry_films.push(film_data.title)
           }
         }
         const tr = document.createElement('TR')
