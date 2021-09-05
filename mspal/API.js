@@ -29,15 +29,17 @@ export default class API {
     //// set url params
     let url = this.url
     const re = /\{.+\}/
-    while (re.test(url)) {
+    // while (re.test(url)) {
       console.debug(`url: ${url}`)
       const key = re.exec(url)[0].substring(1, -1)
+      console.debug(`key: ${key}`)
       console.debug(`params_map: ${[...params_map]}`)
       if (params_map.has(key)) {
         url.replace(`{${key}}`, params_map.get(key))
         params_map.delete(key)
       }
-    }
+      console.debug(`url: ${url}`)
+    // }
     //// transform for fetch
     const params_object = util.mapToObject(params_map)
     switch (this.options.method) {
