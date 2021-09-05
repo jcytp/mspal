@@ -37,7 +37,7 @@ export default class API {
       }
     }
     //// transform for fetch
-    const params_object = [...params_map].reduce((l,[k,v]) => Object.assign(l, {[k]:v}), {})
+    const params_object = util.mapToObject(params_map)
     switch (this.options.method) {
       case 'GET':
         const query_params = new URLSearchParams(params_object)

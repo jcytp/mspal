@@ -3,7 +3,6 @@ import {
   API,
   Handler,
 } from "../mspal.js"
-import util from "../mspal/util"
 
 const cmp = new Component('Call')
 
@@ -42,6 +41,7 @@ cmp.addAPI('get-ghibli-people', new API({
 }))
 cmp.addAPI('get-ghibli-film', new API({
   url: 'https://ghibliapi.herokuapp.com/films/{film-id}',
+  params: ['film-id'],
 }))
 
 /* Event Handlers */
@@ -53,7 +53,8 @@ cmp.addHandler('btn-ghibli-people', new Handler({
     const result = await cmp.callAPI('get-ghibli-people')
     const data = result ? await result.json() : null
     if (data) {
-      const table = util.id('tbl-ghibli-people')
+      const table = document.getElementById('tbl-ghibli-people')
+      table.innerHTML = '<thead><tr><td>name</td><td>gender</td><td>age</td><td>films</td></tr></thead>'
       for (const entry of data) {
         const films = new Array()
         for (film_url of entry.films) {
@@ -64,15 +65,14 @@ cmp.addHandler('btn-ghibli-people', new Handler({
             films.push(film_data.title)
           }
         }
-        const film_api = cmp.getAPI(get-ghibli-film)
-        film_api.setUrlParam('id', )
-        const tr = util.newElem('TR')
-        const td = [
-          util.newElem('TD', null, null, null, entry.name),
-          util.newElem('TD', null, null, null, entry.gender),
-          util.newElem('TD', null, null, null, entry.age),
-          util.newElem('TD', null, null, null, films),
-        ]
+        const tr = document.createElement('TR')
+        const arr_td_text = [entry.name, entry.gender, entry.age, films.toString()]
+        for (const td_text of arr_td_text) {
+          const td = document.createElement('TD')
+          td.innerText = td_text
+          tr.appendChild(td)
+        }
+        table.appendChild(tr)
       }
     } else {
       alert('data not found.')
