@@ -12,7 +12,7 @@ cmp.setHtml(`
   <main>
     <h2>API Call</h2>
     <p>This page shows a sample API call. Thanks to <a href="https://ghibliapi.herokuapp.com/">Studio Ghibli API</a>.</p>
-    <input type="button" id="btnGhibliPeple" value="get people of ghibli" />
+    <input type="button" id="btnGhibliPeople" value="get people of ghibli" />
     <table id="tblGhibliPeople" class="data">
       <thead>
         <tr>

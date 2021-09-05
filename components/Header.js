@@ -18,6 +18,9 @@ cmp.setHtml(`
   </nav>
 `)
 
+/* CSS */
+cmp.addStyle('main')
+
 /* Event Handlers */
 cmp.addHandler('move_to_home', new Handler({
   target: 'clsMoveToHome',
