@@ -69,7 +69,7 @@ cmp.addHandler('btn_ghibli_people', new Handler({
           }
         }
         const tr = document.createElement('TR')
-        const arr_td_text = [entry.name, entry.gender, entry.age, films.toString()]
+        const arr_td_text = [entry.name, entry.gender, entry.age, entry_films.toString()]
         for (const td_text of arr_td_text) {
           const td = document.createElement('TD')
           td.innerText = td_text
