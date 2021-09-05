@@ -11,7 +11,7 @@ export default class API {
     this.params = obj.params ? obj.params : []
   }
   async call(params_map=new Map()) {
-    console.debug(`### API.call() | url: ${this.url}, method: ${this.options.method}, params: ${this.params}`)
+    console.debug(`### API.call() | url: ${this.url}, method: ${this.options.method}`)
     //// collect params
     for (const elem_id of this.params) {
       if (!params_map.has(elem_id)) {
@@ -50,7 +50,7 @@ export default class API {
     }
     const response = await fetch(url, this.options)
     if (!response.ok) {
-      console.error(`API.call() api response error | url: ${this.url}, method: ${this.options.method}, params: ${this.params}`)
+      console.error(`API.call() api response error | url: ${this.url}, method: ${this.options.method}`)
     }
     return response
   }
