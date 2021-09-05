@@ -8,7 +8,7 @@ const cmp = new Component('Points')
 cmp.setHtml(`
   <header id="header"></header>
   <main>
-    <h2>Commentary of points</h2>
+    <h2>Commentary of some points</h2>
     <p>Component's HTML will be expanded into the element specified by its id. In the following example, the Header component is deployed in the element with id="header".</p>
     <pre>const cmp = new Component('Home')
 cmp.setHtml(\`

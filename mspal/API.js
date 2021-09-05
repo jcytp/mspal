@@ -30,7 +30,7 @@ export default class API {
     let url = this.url
     const re = /\{.+\}/
     while (re.test(url)) {
-      const key = re.match(url).substring(1, -1)
+      const key = re.exec(url).substring(1, -1)
       if (params_map.has(key)) {
         url.replace(`{${key}}`, params_map.get(key))
         params_map.delete(key)
