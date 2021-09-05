@@ -37,10 +37,10 @@ export default class Component {
       }
     }
   }
-  async callAPI(name) {
+  async callAPI(name, params=new Map()) {
     const api = this.apis.get(name)
     if (api) {
-      return await api.call()
+      return await api.call(params)
     }
   }
 }

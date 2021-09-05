@@ -1,7 +1,6 @@
 [
-  ["/", "Login"],
-  ["/login", "Login"],
-  ["/register", "Register"],
-  ["/home", "Home"],
-  ["/*", "Login"]
+  ["/", "Home"],
+  ["/call", "Call"],
+  ["/points", "Points"],
+  ["/*", "Home"]
 ]

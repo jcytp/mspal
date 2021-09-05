@@ -19,7 +19,7 @@ export default class util {
     return Array.from(document.getElementsByClassName(elem_classname))
   }
 
-  static newElem(node_name, parent=null, id=null, class_name=null) {
+  static newElem(node_name, parent=null, id=null, class_name=null, text=null) {
     const elem = document.createElement(node_name)
     if (parent) {
       this.id(parent).appendChild(elem)
@@ -29,6 +29,9 @@ export default class util {
     }
     if (class_name) {
       elem.className = class_name
+    }
+    if (text) {
+      elem.innerText = text
     }
     return elem
   }
