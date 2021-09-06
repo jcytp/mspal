@@ -48,19 +48,19 @@ table {
 /* ---------------------------------------- */
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  padding-bottom: 80px;
   font-family: 'Kosugi Maru', monospace;
   font-size: 14px;
   color: #333;
 }
 
 a {
-  text-decoration: underline;
-  color: #666;
   cursor: pointer;
 }
-a:hover, a:focus {
+a:hover,
+a:focus {
   color: #999;
 }
 
@@ -84,10 +84,14 @@ nav ul li {
 }
 
 main {
-  margin: 0 auto;
+  margin: 0 auto 40px;
   max-width: 95%;
-  width:720px;
+  width: 980px;
   line-height: 20px;
+}
+main a {
+  text-decoration: underline;
+  color: #666;
 }
 
 h2 {
