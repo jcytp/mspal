@@ -118,6 +118,12 @@ ol li {
   margin: 4px 0 0 60px;
 }
 
+pre {
+  margin: 10px 40px;
+  padding: 10px 20px;
+  background-color: #eee;
+}
+
 footer {
   margin: auto 0 0 0;
   width: 100%;
