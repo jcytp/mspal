@@ -1,0 +1,35 @@
+
+.dataButton {
+    margin: 10px auto;
+    width: 200px;
+    height: 24px;
+    border-radius: 8px;
+    padding: 0;
+    line-height: 24px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #666;
+    cursor: pointer;
+}
+.dataButton:hover,
+.dataButton:focus {
+    background-color: #999;
+}
+
+.dataTable {
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse;
+    line-height: 20px;
+    font-size: 16px;
+    color: #333;
+}
+.dataTable thead {
+    background-color: #eee;
+}
+.dataTable th,
+.dataTable td {
+    padding: 4px 8px;
+    border: 2px solid #666;
+}
+
