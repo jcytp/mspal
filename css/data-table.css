@@ -1,9 +1,9 @@
 
 .dataButton {
     display: block;
-    margin: 10px auto;
+    margin: 20px auto 10px;
     width: 200px;
-    height: 24px;
+    height: 30px;
     border-radius: 8px;
     padding: 0;
     line-height: 24px;

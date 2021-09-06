@@ -75,12 +75,22 @@ h1 {
 
 nav {
   margin: 10px 0;
-  line-height: 20px;
+  line-height: 30px;
   text-align: center;
 }
 nav ul li {
   display: inline-block;
-  margin: 0 20px;
+  margin: 0 10px;
+}
+nav ul li a {
+  display: inline-block;
+  line-height: 20px;
+  padding: 10px 20px 0;
+  border-bottom: 1px solid #666;
+}
+nav ul li a:hover,
+nav ul li a:focus {
+  border-bottom: 1px solid #999;
 }
 
 main {
