@@ -11,7 +11,7 @@ cmp.setHtml(`
   <header id="header"></header>
   <main>
     <h2>API Call</h2>
-    <p>This page shows a sample API call. Thanks to <a href="https://ghibliapi.herokuapp.com/">Studio Ghibli API</a>.</p>
+    <p>This page shows a sample API call. It uses <a href="https://ghibliapi.herokuapp.com/">Studio Ghibli API</a>.</p>
     <input type="button" id="btnGhibliPeople" value="get people of ghibli" />
     <table id="tblGhibliPeople" class="data">
       <thead>
@@ -65,8 +65,13 @@ cmp.addHandler('btn_ghibli_people', new Handler({
           } else {
             const film_result = await cmp.callAPI('get_ghibli_film', new Map([['film-id', film_id]]))
             const film_data = film_result ? await film_result.json() : null
-            films_map.set(film_id, film_data.title)
-            entry_films.push(film_data.title)
+            if (film_data) {
+              films_map.set(film_id, film_data.title)
+              entry_films.push(film_data.title)
+            } else {
+              films_map.set(film_id, '-')
+              entry_films.push('-')
+            }
           }
         }
         const tr = document.createElement('TR')
