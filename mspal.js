@@ -24,7 +24,7 @@ const getSettings = async (base_path, filename) => {
     url: `${base_path}${filename}`
   })
   const response = await settings_api.call()
-  if (response) {
+  if (response.ok) {
     const settings = await response.json()
     return settings
   }
