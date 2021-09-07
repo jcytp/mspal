@@ -127,7 +127,7 @@ export default class Page {
     // # read from routes.json
     await page.loadRoutes()
     page.back_handler.set()
-    const top_component_id = page.findRoute(document.location.pathname)
+    const top_component_id = page.findRoute(`${document.location.pathname}`)
     if (!top_component_id) {
       console.error(`page initialize error | component for this uri not defined.`)
       return

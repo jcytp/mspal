@@ -12,7 +12,9 @@ const getBasePath = () => {
   for (const script of scripts) {
     const match = script.src.match(/(^|.*\/)mspal.js/)
     if (match) {
-      return match[1]
+      const url = document.createElement('a')
+      url.href = match[1]
+      return url.pathname
     }
   }
   return ''
@@ -35,7 +37,7 @@ const starter = new Handler({
   type: 'load',
   listener: () => {
     const base_path = getBasePath()
-    const settings = getSettings(base_path, 'settings.json')
+    const settings = await getSettings(base_path, 'settings.json')
     Page.init(settings)
   }
 })
