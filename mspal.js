@@ -7,7 +7,8 @@ import Page from './mspal/Page.js'
 export { Component, API, Handler, Page }
 
 const getBasePath = () => {
-  const scripts = document.getElementsByTagName("script")
+  console.debug(`getBasePath`)
+  const scripts = document.getElementsByTagName("SCRIPT")
   for (const script of scripts) {
     console.debug(`script.src: ${script.src}`)
     const match = script.src.match(/(^|.*\/)mspal.js/)
