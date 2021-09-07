@@ -8,7 +8,7 @@ export { Component, API, Handler, Page }
 
 const getBasePath = () => {
   const scripts = document.getElementsByTagName("script")
-  for (script of scripts) {
+  for (const script of scripts) {
     const match = script.src.match(/(^|.*\/)mspal.js/)
     if (match) {
       return match
