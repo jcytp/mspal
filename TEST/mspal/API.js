@@ -37,7 +37,7 @@ export default class API {
       }
     }
     //// transform for fetch
-    const params_object = map.size > 0 ? util.mapToObject(params_map) : null
+    const params_object = params_map.size > 0 ? util.mapToObject(params_map) : null
     if (params_object) {
       switch (this.options.method) {
         case 'GET':
