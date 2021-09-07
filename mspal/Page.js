@@ -123,7 +123,7 @@ export default class Page {
   static async init() {
     console.debug(`### Page.init()`)
     // ToDo: read from params.json
-    const get_settings = () => {
+    const get_settings = async () => {
       const settings_api = new API({
         url: "../settings.json"
       })
@@ -134,7 +134,7 @@ export default class Page {
       }
       return {}
     }
-    const settings = get_settings()
+    const settings = await get_settings()
     Page.instance = new Page(settings)
     const page = Page.instance
     // # read from routes.json
