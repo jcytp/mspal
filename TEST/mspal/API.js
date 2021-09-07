@@ -38,9 +38,11 @@ export default class API {
     }
     //// transform for fetch
     const params_object = util.mapToObject(params_map)
+    console.log(`params_object: ${params_object}`)
     switch (this.options.method) {
       case 'GET':
         const query_params = new URLSearchParams(params_object)
+        console.log(`query_params: ${query_params}`)
         url = `${url}?${query_params}`
         break
       case 'POST':
