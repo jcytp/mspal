@@ -13,7 +13,7 @@ export default class Page {
     this.components_path = settings.components_path ? settings.components_path : `../components/`
     this.style_path = settings.style_path ? settings.style_path : `${this.base_path}css/`
     this.root_id = settings.root_id ? settings.root_id : "spa-root"
-    this.history_prefix = settings.history_prefix ? settings.history_prefix : "mspal"
+    this.history_prefix = settings.history_prefix ? settings.history_prefix : "mspal|"
     this.unused_style_class = settings.unused_style_class ? settings.unused_style_class : "mspal_unused_style"
     this.routes = new Map()
     this.components = new Map()
@@ -24,7 +24,7 @@ export default class Page {
       listener: async (ev) => {
         const page = Page.instance
         if (page.domain == document.location.host && ev.state.startsWith(page.history_prefix)) {
-          const top_component_id = ev.state.substr(5)
+          const top_component_id = ev.state.substr(page.history_prefix.length())
           page.open(top_component_id)
         }
       }
@@ -144,7 +144,7 @@ export default class Page {
       console.error(`page move error | component for next uri not defined.`)
       return
     }
-    history.pushState(`${page.history_prefix}|${top_component_id}`, "", `${page.base_path}${path}`)
+    history.pushState(`${page.history_prefix}${top_component_id}`, "", `${page.base_path}${path}`)
     page.open(top_component_id)
   }
 }
