@@ -27,7 +27,7 @@ cmp.addHandler('move_to_home', new Handler({
   type: 'click',
   listener: (ev) => {
     ev.preventDefault()
-    Page.move('./home')
+    Page.move('home')
   },
 }))
 cmp.addHandler('move_to_call', new Handler({
@@ -35,7 +35,7 @@ cmp.addHandler('move_to_call', new Handler({
   type: 'click',
   listener: (ev) => {
     ev.preventDefault()
-    Page.move('./call')
+    Page.move('call')
   },
 }))
 cmp.addHandler('move_to_points', new Handler({
@@ -43,7 +43,7 @@ cmp.addHandler('move_to_points', new Handler({
   type: 'click',
   listener: (ev) => {
     ev.preventDefault()
-    Page.move('./points')
+    Page.move('points')
   },
 }))
 
