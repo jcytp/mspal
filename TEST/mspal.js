@@ -35,10 +35,10 @@ const getSettings = async (base_path, filename) => {
 const starter = new Handler({
   target: '__window',
   type: 'load',
-  listener: () => {
+  listener: async () => {
     const base_path = getBasePath()
     const settings = await getSettings(base_path, 'settings.json')
-    Page.init(settings)
+    await Page.init(settings)
   }
 })
 starter.set()
