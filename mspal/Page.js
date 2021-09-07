@@ -24,7 +24,7 @@ export default class Page {
       listener: async (ev) => {
         const page = Page.instance
         if (page.domain == document.location.host && ev.state.startsWith(page.history_prefix)) {
-          const top_component_id = ev.state.substr(page.history_prefix.length())
+          const top_component_id = ev.state.substr(page.history_prefix.length)
           page.open(top_component_id)
         }
       }
