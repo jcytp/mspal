@@ -10,7 +10,7 @@ export default class Page {
     this.base_path = settings.base_path ? settings.base_path : ""
     this.domain = settings.domain ? settings.domain : document.location.host
     this.routes_path = settings.routes_path ? settings.routes_path : `${this.base_path}routes.json`
-    this.components_path = settings.components_path ? settings.components_path : `../components/`
+    this.components_path = settings.components_path ? settings.components_path : `${this.base_path}components/`
     this.style_path = settings.style_path ? settings.style_path : `${this.base_path}css/`
     this.root_id = settings.root_id ? settings.root_id : "spa-root"
     this.history_prefix = settings.history_prefix ? settings.history_prefix : "mspal|"
@@ -121,13 +121,14 @@ export default class Page {
   /* ------------------------------------------------------------ */
 
   static async init(settings) {
-    console.debug(`### Page.init()`)
+    console.debug(`### Page.init(${settings})`)
     Page.instance = new Page(settings)
     const page = Page.instance
     // # read from routes.json
     await page.loadRoutes()
     page.back_handler.set()
-    const top_component_id = page.findRoute(document.location.pathname)
+    const path = document.location.pathname.replace(page.base_path, "")
+    const top_component_id = page.findRoute(path)
     if (!top_component_id) {
       console.error(`page initialize error | component for this uri not defined.`)
       return

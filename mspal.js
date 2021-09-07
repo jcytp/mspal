@@ -10,16 +10,17 @@ const getBasePath = () => {
   console.debug(`getBasePath`)
   const scripts = document.getElementsByTagName("SCRIPT")
   for (const script of scripts) {
-    console.debug(`script.src: ${script.src}`)
     const match = script.src.match(/(^|.*\/)mspal.js/)
     if (match) {
-      console.debug(`match[1]: ${match[1]}`)
-      return match[1]
+      const url = document.createElement('a')
+      url.href = match[1]
+      return url.pathname
     }
   }
   return ''
 }
 const getSettings = async (base_path, filename) => {
+  console.debug(`getSettings(${base_path}, ${filename})`)
   const settings_api = new API({
     url: `${base_path}${filename}`
   })
@@ -34,10 +35,10 @@ const getSettings = async (base_path, filename) => {
 const starter = new Handler({
   target: '__window',
   type: 'load',
-  listener: () => {
+  listener: async () => {
     const base_path = getBasePath()
-    const settings = getSettings(base_path, 'settings.json')
-    Page.init(settings)
+    const settings = await getSettings(base_path, 'settings.json')
+    await Page.init(settings)
   }
 })
 starter.set()

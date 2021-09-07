@@ -37,16 +37,18 @@ export default class API {
       }
     }
     //// transform for fetch
-    const params_object = util.mapToObject(params_map)
-    switch (this.options.method) {
-      case 'GET':
-        const query_params = new URLSearchParams(params_object)
-        url = `${url}?${query_params}`
-        break
-      case 'POST':
-      case 'PUT':
-        this.options.body = JSON.stringify(params_object)
-        break
+    const params_object = params_map.size > 0 ? util.mapToObject(params_map) : null
+    if (params_object) {
+      switch (this.options.method) {
+        case 'GET':
+          const query_params = new URLSearchParams(params_object)
+          url = `${url}?${query_params}`
+          break
+        case 'POST':
+        case 'PUT':
+          this.options.body = JSON.stringify(params_object)
+          break
+      }
     }
     const response = await fetch(url, this.options)
     if (!response.ok) {
