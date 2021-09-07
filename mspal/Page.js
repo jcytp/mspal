@@ -125,7 +125,7 @@ export default class Page {
     // ToDo: read from params.json
     const get_settings = async () => {
       const settings_api = new API({
-        url: "../settings.json"
+        url: "/settings.json"
       })
       const response = await settings_api.call()
       if (response) {
