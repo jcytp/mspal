@@ -9,9 +9,9 @@ export default class Page {
     console.debug(`Page.constructor(${settings})`)
     this.base_path = settings.base_path ? settings.base_path : ""
     this.domain = settings.domain ? settings.domain : document.location.host
-    this.routes_path = settings.routes_path ? settings.routes_path : "../routes.json"
-    this.components_path = settings.components_path ? settings.components_path : "../components/"
-    this.style_path = settings.style_path ? settings.style_path : "../css/"
+    this.routes_path = settings.routes_path ? settings.routes_path : `${this.base_path}mspal/routes.json`
+    this.components_path = settings.components_path ? settings.components_path : `${this.base_path}components/`
+    this.style_path = settings.style_path ? settings.style_path : `${this.base_path}css/`
     this.root_id = settings.root_id ? settings.root_id : "spa-root"
     this.history_prefix = settings.history_prefix ? settings.history_prefix : "mspal"
     this.unused_style_class = settings.unused_style_class ? settings.unused_style_class : "mspal_unused_style"
@@ -120,21 +120,8 @@ export default class Page {
 
   /* ------------------------------------------------------------ */
 
-  static async init() {
+  static async init(settings) {
     console.debug(`### Page.init()`)
-    // ToDo: read from params.json
-    const get_settings = async () => {
-      const settings_api = new API({
-        url: "/settings.json"
-      })
-      const response = await settings_api.call()
-      if (response) {
-        const settings = await response.json()
-        return settings
-      }
-      return {}
-    }
-    const settings = await get_settings()
     Page.instance = new Page(settings)
     const page = Page.instance
     // # read from routes.json
