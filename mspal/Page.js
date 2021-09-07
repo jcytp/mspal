@@ -9,7 +9,7 @@ export default class Page {
     console.debug(`Page.constructor(${settings})`)
     this.base_path = settings.base_path ? settings.base_path : ""
     this.domain = settings.domain ? settings.domain : document.location.host
-    this.routes_path = settings.routes_path ? settings.routes_path : `${this.base_path}mspal/routes.json`
+    this.routes_path = settings.routes_path ? settings.routes_path : `${this.base_path}routes.json`
     this.components_path = settings.components_path ? settings.components_path : `${this.base_path}components/`
     this.style_path = settings.style_path ? settings.style_path : `${this.base_path}css/`
     this.root_id = settings.root_id ? settings.root_id : "spa-root"
