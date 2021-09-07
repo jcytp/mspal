@@ -7,11 +7,14 @@ import Page from './mspal/Page.js'
 export { Component, API, Handler, Page }
 
 const getBasePath = () => {
-  const scripts = document.getElementsByTagName("script")
+  console.debug(`getBasePath`)
+  const scripts = document.getElementsByTagName("SCRIPT")
   for (const script of scripts) {
+    console.debug(`script.src: ${script.src}`)
     const match = script.src.match(/(^|.*\/)mspal.js/)
     if (match) {
-      return match
+      console.debug(`match[1]: ${match[1]}`)
+      return match[1]
     }
   }
   return ''
@@ -21,7 +24,7 @@ const getSettings = async (base_path, filename) => {
     url: `${base_path}${filename}`
   })
   const response = await settings_api.call()
-  if (response) {
+  if (response.ok) {
     const settings = await response.json()
     return settings
   }
