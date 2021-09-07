@@ -21,6 +21,7 @@ cmp.setHtml(`
       <li>In the html file that the visitor loads first, load the mspal.js and specify the spa-root element as follows.</li>
       <li>Using this sample as a reference, describe the contents of your website in the files in the components directory.</li>
       <li>Edit routes.json and specify the component to be loaded first depending on the URI.</li>
+      <li>Rewrite and place settings.js, if you need it.</li>
     </ol>
   </main>
   <footer id="footer"></footer>

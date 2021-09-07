@@ -5,14 +5,16 @@ import Handler from "./Handler.js"
 export default class Page {
   static instance = null
 
-  constructor(obj = {}) {
-    this.domain = obj.domain ? obj.domain : document.location.host
-    this.routes_path = obj.routes_path ? obj.routes_path : "../routes.json"
-    this.components_path = obj.components_path ? obj.components_path : "../components/"
-    this.style_path = obj.style_path ? obj.style_path : "../css/"
-    this.root_id = obj.root_id ? obj.root_id : "spa-root"
-    this.history_prefix = obj.history_prefix ? obj.history_prefix : "mspal"
-    this.unused_style_class = obj.unused_style_class ? obj.unused_style_class : "mspal_unused_style"
+  constructor(settings = {}) {
+    console.debug(`Page.constructor(${settings})`)
+    this.base_path = settings.base_path ? settings.base_path : ""
+    this.domain = settings.domain ? settings.domain : document.location.host
+    this.routes_path = settings.routes_path ? settings.routes_path : "../routes.json"
+    this.components_path = settings.components_path ? settings.components_path : "../components/"
+    this.style_path = settings.style_path ? settings.style_path : "../css/"
+    this.root_id = settings.root_id ? settings.root_id : "spa-root"
+    this.history_prefix = settings.history_prefix ? settings.history_prefix : "mspal"
+    this.unused_style_class = settings.unused_style_class ? settings.unused_style_class : "mspal_unused_style"
     this.routes = new Map()
     this.components = new Map()
     this.styles = new Map()
@@ -121,7 +123,19 @@ export default class Page {
   static async init() {
     console.debug(`### Page.init()`)
     // ToDo: read from params.json
-    Page.instance = new Page()
+    const get_settings = () => {
+      const settings_api = new API({
+        url: "../settings.json"
+      })
+      const response = settings_api.call()
+      if (response) {
+        const settings = await response.json()
+        return settings
+      }
+      return {}
+    }
+    const settings = get_settings()
+    Page.instance = new Page(settings)
     const page = Page.instance
     // # read from routes.json
     await page.loadRoutes()
@@ -143,7 +157,7 @@ export default class Page {
       console.error(`page move error | component for next uri not defined.`)
       return
     }
-    history.pushState(`${page.history_prefix}${top_component_id}`, "", path)
+    history.pushState(`${page.history_prefix}|${top_component_id}`, "", `${page.base_path}${path}`)
     page.open(top_component_id)
   }
 }
