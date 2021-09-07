@@ -127,7 +127,7 @@ export default class Page {
       const settings_api = new API({
         url: "../settings.json"
       })
-      const response = settings_api.call()
+      const response = await settings_api.call()
       if (response) {
         const settings = await response.json()
         return settings
