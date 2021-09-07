@@ -11,7 +11,7 @@ const getBasePath = () => {
   for (const script of scripts) {
     const match = script.src.match(/(^|.*\/)mspal.js/)
     if (match) {
-      return match
+      return match[1]
     }
   }
   return ''
