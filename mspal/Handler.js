@@ -15,4 +15,12 @@ export default class Handler {
       elem.addEventListener(this.type, this.listener, this.options)
     }
   }
+  fire() {
+    const id_elem = util.id(this.target)
+    const elems = id_elem ? [id_elem] : util.class(this.target)
+    for (const elem of elems) {
+      const ev = new Event(this.type)
+      elem.dispatchEvent(ev)
+    }
+  }
 }

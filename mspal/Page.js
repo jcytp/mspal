@@ -93,6 +93,7 @@ export default class Page {
     for (const [id, cmp_id] of component.children) {
       this.lenderComponents(id, cmp_id)
     }
+    component.onload ? component.onload() : null
   }
 
   setUnusedStylesFlag() {

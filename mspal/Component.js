@@ -9,6 +9,7 @@ export default class Component {
     this.styles = new Array()
     this.apis = new Map()
     this.handlers = new Map()
+    this.onload = null
   }
   setHtml(html) {
     this.html = html
@@ -24,6 +25,9 @@ export default class Component {
   }
   addHandler(name, handler) {
     this.handlers.set(name, handler)
+  }
+  getHandler(name) {
+    return this.handlers.get(name)
   }
   async lender(target_id) {
     console.debug(`### Component.lender(${this.id} -> ${target_id})`)
