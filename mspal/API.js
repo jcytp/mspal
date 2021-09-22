@@ -27,13 +27,17 @@ export default class API {
       }
     }
     //// set url params
+    console.debug(`### params_map: ${params_map}`)
     let url = this.url
-    const re = /\{.+\}/
+    const re = /\{[^\}]+\}/
     while (re.test(url)) {
       const key = re.exec(url)[0].slice(1, -1)
       if (params_map.has(key)) {
         url = url.replace(`{${key}}`, params_map.get(key))
         params_map.delete(key)
+      } else {
+        console.error(`Error| missed API parameter: ${key}`)
+        break
       }
     }
     //// transform for fetch
