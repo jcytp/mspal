@@ -6,7 +6,7 @@ export default class Page {
   static instance = null
 
   constructor(settings = {}) {
-    console.debug(`Page.constructor(${settings})`)
+    console.debug(`### Page.constructor(${settings})`)
     this.base_path = settings.base_path ? settings.base_path : ""
     this.domain = settings.domain ? settings.domain : document.location.host
     this.routes_path = settings.routes_path ? settings.routes_path : `${this.base_path}routes.json`
@@ -54,17 +54,42 @@ export default class Page {
   }
 
   async loadComponents(component_id) {
+    console.debug(`### Page.loadComponents(${component_id})`)
     if (this.components.has(component_id)) {
       return
     }
     const module = await import (`${this.components_path}${component_id}.js`)
     const component = module ? (module.default ? module.default : null) : null
-    if (component) {
-      this.components.set(component_id, component)
-      for (const [id, cmp_id] of component.children) {
+    if (!component) {
+      console.error(`Page.loadComponents() load module error | component_id: ${component_id}`)
+      return
+    }
+    this.components.set(component_id, component)
+    const promise_list = []
+    for (const [id, cmp_id] of component.children) {
+      const promise = new Promise(async resolve => {
         await this.loadComponents(cmp_id)
-      }
-      for (const style_id of component.styles) {
+        resolve()
+      })
+      promise_list.push(promise)
+    }
+    await Promise.all(promise_list)
+  }
+  
+  getComponentsStyles(component_id) {
+    const component = this.components.get(component_id)
+    let style_id_list = component.getStyles()
+    for (const child_id of component.getChildrenId()) {
+      style_id_list = style_id_list.concat(this.getComponentsStyles(child_id))
+    }
+    return style_id_list
+  }
+  async loadComponentStyles(component_id) {
+    console.debug(`### Page.loadComponentStyles(${component_id})`)
+    const style_id_list = this.getComponentsStyles(component_id)
+    const promise_list = []
+    for (const style_id of style_id_list) {
+      const promise = new Promise(async resolve => {
         if (!this.styles.has(style_id)) {
           const style_api = new API({
             url: `${this.style_path}${style_id}.css`
@@ -73,10 +98,11 @@ export default class Page {
           const style_source = await response.text()
           this.styles.set(style_id, style_source)
         }
-      }
-    } else {
-      console.error(`Page.loadComponents() load module error | component_id: ${component_id}`)
+        resolve()
+      })
+      promise_list.push(promise)
     }
+    await Promise.all(promise_list)
   }
 
   lenderComponents(target_id, component_id) {
@@ -114,6 +140,7 @@ export default class Page {
   async open(component_id) {
     console.debug(`### Page.open(${component_id})`)
     await this.loadComponents(component_id)
+    await this.loadComponentStyles(component_id)
     this.setUnusedStylesFlag()
     this.lenderComponents(util.id(this.root_id) ? this.root_id : "__body", component_id)
     this.removeUnusedStyles()
