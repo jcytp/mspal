@@ -63,7 +63,7 @@ cmp.addHandler('btn_ghibli_people', new Handler({
           if (films_map.has(film_id)) {
             entry_films.push(films_map.get(film_id))
           } else {
-            const film_result = await cmp.callAPI('get_ghibli_film', new Map([['film-id', film_id]]))
+            const film_result = await cmp.callAPI('get_ghibli_film', null, new Map([['film-id', film_id]]))
             const film_data = film_result ? await film_result.json() : null
             if (film_data) {
               films_map.set(film_id, film_data.title)
