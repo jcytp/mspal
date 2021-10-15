@@ -1,13 +1,13 @@
 
-import Component from './mspal/Component.js'
-import API from './mspal/API.js'
-import Handler from './mspal/Handler.js'
-import Page from './mspal/Page.js'
+import Component from './Component.js'
+import API from './API.js'
+import Handler from './Handler.js'
+import Page from './Page.js'
 
 export { Component, API, Handler, Page }
 
 const getBasePath = () => {
-  console.debug(`getBasePath`)
+  console.debug(`### mspal.getBasePath()`)
   const scripts = document.getElementsByTagName("SCRIPT")
   for (const script of scripts) {
     const match = script.src.match(/(^|.*\/)mspal.js/)
@@ -20,7 +20,7 @@ const getBasePath = () => {
   return ''
 }
 const getSettings = async (base_path, filename) => {
-  console.debug(`getSettings(${base_path}, ${filename})`)
+  console.debug(`### mspal.getSettings(${base_path}, ${filename})`)
   const settings_api = new API({
     url: `${base_path}${filename}`
   })
@@ -38,7 +38,7 @@ const starter = new Handler({
   listener: async () => {
     const base_path = getBasePath()
     const settings = await getSettings(base_path, 'settings.json')
-    await Page.init(settings)
+    Page.init(settings)
   }
 })
 starter.set()

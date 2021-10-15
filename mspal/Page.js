@@ -46,7 +46,7 @@ export default class Page {
   findRoute(uri) {
     console.debug(`### Page.findRoute(${uri})`)
     for (const [uri_pattern, component_id] of this.routes) {
-      if (util.matchRuleWild(uri, uri_pattern)) {
+      if (util.matchRule(uri, uri_pattern)) {
         return component_id
       }
     }
@@ -119,7 +119,10 @@ export default class Page {
     for (const [id, cmp_id] of component.children) {
       this.lenderComponents(id, cmp_id)
     }
-    component.onload ? component.onload() : null
+    if (component.onload != null) {
+      component.onload()
+      component.onload_complete = true
+    }
   }
 
   setUnusedStylesFlag() {
@@ -152,7 +155,6 @@ export default class Page {
     console.debug(`### Page.init(${settings})`)
     Page.instance = new Page(settings)
     const page = Page.instance
-    // # read from routes.json
     await page.loadRoutes()
     page.back_handler.set()
     const path = document.location.pathname.replace(page.base_path, "")
@@ -165,7 +167,7 @@ export default class Page {
     page.open(top_component_id)
   }
 
-  static async move(path) {
+  static async move(path, history_record=true) {
     console.debug(`### Page.move(${path})`)
     const page = Page.instance
     const top_component_id = page.findRoute(path)
@@ -173,7 +175,11 @@ export default class Page {
       console.error(`page move error | component for next uri not defined.`)
       return
     }
-    history.pushState(`${page.history_prefix}${top_component_id}`, "", `${page.base_path}${path}`)
+    if (history_record) {
+      history.pushState(`${page.history_prefix}${top_component_id}`, "", `${page.base_path}${path}`)
+    } else {
+      history.replaceState(`${page.history_prefix}${top_component_id}`, "", `${page.base_path}${path}`)
+    }
     page.open(top_component_id)
   }
 }

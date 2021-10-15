@@ -2,5 +2,5 @@
   ["", "Home"],
   ["call", "Call"],
   ["points", "Points"],
-  ["*", "Home"]
+  ["{any}", "Home"]
 ]

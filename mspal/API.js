@@ -40,6 +40,12 @@ export default class API {
         break
       }
     }
+    //// delete null param
+    for (const param_set of params_map) {
+      if (param_set[1] == null) {
+        params_map.delete(param_set[0])
+      }
+    }
     //// transform for fetch
     const params_object = params_map.size > 0 ? util.mapToObject(params_map) : null
     if (params_object) {

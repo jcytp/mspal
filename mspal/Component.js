@@ -1,4 +1,3 @@
-import API from "./API.js"
 import Handler from "./Handler.js"
 import Page from "./Page.js"
 import util from "./util.js"
@@ -12,8 +11,14 @@ export default class Component {
     this.apis = new Map()
     this.handlers = new Map()
     this.onload = null
+    this.onload_complete = false
+    this.root_id = null
   }
   setHtml(html) {
+    this.html = html
+  }
+  saveHtml() {
+    const html = util.id(this.root_id).innerHTML
     this.html = html
   }
   addChild(elem_id, component_id) {
@@ -41,7 +46,7 @@ export default class Component {
   getHandler(name) {
     return this.handlers.get(name)
   }
-  addInnerLink(target_id, path) {
+  addInnerLink(target_id, path, setup=false) {
     this.addHandler(`${this.id}_link_${target_id}`, new Handler({
       target: target_id,
       type: 'click',
@@ -50,29 +55,42 @@ export default class Component {
         Page.move(path)
       },
     }))
+    if (setup) {
+      this.handlers.get(`${this.id}_link_${target_id}`).set()
+    }
+  }
+  addClickHandler(btn_id, func, setup=false) {
+    this.addHandler(`${this.id}_click_${btn_id}`, new Handler({
+      target: btn_id,
+      type: 'click',
+      listener: (ev) => {
+        ev.preventDefault()
+        func()
+      },
+    }))
+    if (setup) {
+      this.handlers.get(`${this.id}_click_${btn_id}`).set()
+    }
   }
   async lender(target_id) {
     console.debug(`### Component.lender(${this.id} -> ${target_id})`)
     const node = util.id(target_id)
     if (node) {
-      // html
       node.innerHTML = this.html
-      // handlers
       for (const [name, handler] of this.handlers) {
         handler.set()
       }
+      this.root_id = target_id
     }
   }
   async callAPI(name, form_id=null, params=new Map()) {
     if (form_id) {
       const form_data = new FormData(util.id(form_id))
-      console.log(form_data.entries())
       for (const pair of form_data.entries()) {
         if (!params.has(pair[0])) {
           params.set(pair[0], pair[1])
         }
       }
-      console.log(params)
     }
     const api = this.apis.get(name)
     if (api) {

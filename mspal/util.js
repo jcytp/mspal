@@ -47,12 +47,8 @@ export default class util {
     }
   }
 
-  static matchRuleWild(str, rule) {
-    const escapeRegex = (not_regex) => {
-      return not_regex.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")
-    }
-    rule = "^" + rule.split("*").map(escapeRegex).join(".*") + "$"
-    const regex = new RegExp(rule)
+  static matchRule(str, rule) {
+    const regex = new RegExp("^" + rule.replace(/\{.*\}/g, "[^/]+") + "$")
     return regex.test(str)
   }
 
