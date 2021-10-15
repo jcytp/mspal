@@ -2,7 +2,7 @@ import {
   Component,
   Handler,
   Page,
-} from "../mspal.js"
+} from "../mspal/mspal.js"
 
 const cmp = new Component('Header')
 

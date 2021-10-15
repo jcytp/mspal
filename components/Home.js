@@ -1,6 +1,6 @@
 import {
   Component,
-} from "../mspal.js"
+} from "../mspal/mspal.js"
 
 const cmp = new Component('Home')
 
