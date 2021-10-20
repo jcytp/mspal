@@ -29,6 +29,7 @@ export default class Page {
         }
       }
     })
+    this.top_component_id = null
   }
 
   /* ------------------------------------------------------------ */
@@ -142,11 +143,20 @@ export default class Page {
 
   async open(component_id) {
     console.debug(`### Page.open(${component_id})`)
+    this.top_component_id = component_id
     await this.loadComponents(component_id)
     await this.loadComponentStyles(component_id)
     this.setUnusedStylesFlag()
     this.lenderComponents(util.id(this.root_id) ? this.root_id : "__body", component_id)
     this.removeUnusedStyles()
+  }
+
+  cascadeMessage(component_id, msg, params) {
+    const component = this.components.get(component_id)
+    component.receiveMessage(msg, params)
+    for (const [id, cmp_id] of component.children) {
+      this.cascadeMessage(cmp_id, msg, params)
+    }
   }
 
   /* ------------------------------------------------------------ */
@@ -181,5 +191,11 @@ export default class Page {
       history.replaceState(`${page.history_prefix}${top_component_id}`, "", `${page.base_path}${path}`)
     }
     page.open(top_component_id)
+  }
+
+  static sendMessage(msg, params) {
+    console.debug(`### Page.send_message(${msg}, ${params})`)
+    const page = Page.instance
+    page.cascadeMessage(page.top_component_id, msg, params)
   }
 }

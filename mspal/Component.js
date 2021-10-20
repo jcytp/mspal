@@ -10,6 +10,7 @@ export default class Component {
     this.styles = new Array()
     this.apis = new Map()
     this.handlers = new Map()
+    this.msg_actions = new Map()
     this.onload = null
     this.onload_complete = false
     this.root_id = null
@@ -46,6 +47,15 @@ export default class Component {
   getHandler(name) {
     return this.handlers.get(name)
   }
+  addMsgAction(msg, action) {
+    this.msg_actions.set(msg, action)
+  }
+  receiveMessage(msg, params) {
+    const action = this.msg_actions.get(msg)
+    if (action) {
+      action(params)
+    }
+  }
   addInnerLink(target_id, path, setup=false) {
     this.addHandler(`${this.id}_link_${target_id}`, new Handler({
       target: target_id,
@@ -65,7 +75,7 @@ export default class Component {
       type: 'click',
       listener: (ev) => {
         ev.preventDefault()
-        func()
+        func(ev)
       },
     }))
     if (setup) {

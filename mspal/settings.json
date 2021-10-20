@@ -1,5 +1,5 @@
 {
-    "base_path": "/mspal/",
-    "components_path": "/mspal/components/",
-    "style_path": "/mspal/css/"
+    "base_path": "/putask/",
+    "components_path": "/putask/components/",
+    "style_path": "/putask/css/"
 }
