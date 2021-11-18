@@ -57,7 +57,7 @@ export default class App {
 
   async open() {
     this._setUnusedFlag()
-    await this._lenderComponent(root_component_target, root_component_path)
+    await this._lenderComponent(this.root_component_target, this.root_component_path)
     this._removeUnused()
     this.cascadeMessage(this.root_component_path, 'mspal_onload', null)
   }
@@ -96,11 +96,7 @@ export default class App {
 
   async _lenderComponent(target, cmp_path) {
     //// load current component
-    if (this.components.has(cmp_path)) {
-      cmp = this.components.get(cmp_path)
-    } else {
-      cmp = await _loadComponent(cmp_path)
-    }
+    const cmp = this.components.has(cmp_path) ? this.components.get(cmp_path) : await this._loadComponent(cmp_path)
     cmp.lender(target)
     //// load styles, scripts, sub_components
     const promise_list = new Array()

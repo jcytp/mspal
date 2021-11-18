@@ -1,5 +1,6 @@
-import Handler from "./Handler.js"
 import App from "./App.js"
+import Handler from "./Handler.js"
+import Dom from "./Dom.js"
 
 export default class Component {
   constructor() {
@@ -89,7 +90,7 @@ export default class Component {
 
   lender(target_id) {
     console.debug(`### Component.lender(${target_id})`)
-    const elem = DOM.get(`#${target_id}`)
+    const elem = Dom.get(`#${target_id}`)
     if (elem) {
       if (this.html === null) {
         this.html = elem.innerHTML
@@ -102,7 +103,7 @@ export default class Component {
       this.target_id = target_id
     }
   }
-  callApi(name, form_id=null, params=null) {
+  async callApi(name, form_id=null, params=null) {
     if (params === null) {
       params = new Map()
     }

@@ -1,11 +1,11 @@
 
-import App from 'mspal/App.js'
-import DOM from 'mspal/DOM.js'
+import App from './mspal/App.js'
+import Dom from './mspal/Dom.js'
 
 const app = new App()
 
 app.init({
-  'base_path': DOM.getUrlPath(import.meta.url.replace('main.js', '')),
+  'base_path': Dom.getUrlPath(import.meta.url.replace('main.js', '')),
   'components_dir': 'cmp',
   'styles_dir': 'css',
   'root_component_path': 'root.js',

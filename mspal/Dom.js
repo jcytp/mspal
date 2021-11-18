@@ -23,6 +23,13 @@ export default class Dom {
     return elem
   }
 
+  static getUrlPath(url=null) {
+    const target_url = url || location.href
+    const pat = /^[^:]+:\/\/[^\/]+\/(.*)$/
+    const m = pat.exec(target_url)
+    return `/${m[1]}`
+  }
+
   static matchRoutes(routes) {
     const uri = location.pathname
     for (const route of routes) {

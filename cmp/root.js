@@ -8,9 +8,9 @@ cmp.setHtml(null)
 /* sub components */
 cmp.addSubComponent('header', 'common/header.js')
 cmp.addSubComponent('footer', 'common/footer.js')
-cmp.addSubComponent('main', 'home.js', routes=['/'])
-cmp.addSubComponent('main', 'call/sample.js', routes=['/call/sample'])
-cmp.addSubComponent('main', 'points.js', routes=['/points'])
+cmp.addSubComponent('main', 'home.js', ['/'])
+cmp.addSubComponent('main', 'call/sample.js', ['/call/sample'])
+cmp.addSubComponent('main', 'points.js', ['/points'])
 
 /* style sheets */
 cmp.addStyle('main.css')
