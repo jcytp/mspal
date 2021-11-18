@@ -56,6 +56,7 @@ export default class App {
   }
 
   async open() {
+    console.debug(`### App.open()`)
     this._setUnusedFlag()
     await this._lenderComponent(this.root_component_target, this.root_component_path)
     this._removeUnused()
@@ -67,7 +68,7 @@ export default class App {
     cmp.receiveMessage(msg, params)
     const sub_cmp_list = cmp.getSubComponents()
     for (const sub_cmp of sub_cmp_list) {
-      if (Dom.matchRoutes(sub_cmp.routes)) {
+      if (this._matchRoutes(sub_cmp.routes)) {
         this.cascadeMessage(sub_cmp.path, msg, params)
       }
     }
@@ -161,7 +162,7 @@ export default class App {
     //// sub_components
     const sub_cmp_list = cmp.getSubComponents()
     for (const subcmp of sub_cmp_list) {
-      if (Dom.matchRoutes(subcmp.routes)) {
+      if (this._matchRoutes(subcmp.routes)) {
         const promise = this._lenderComponent(subcmp.target_id, subcmp.path)
         promise_list.push(promise)
       }
@@ -184,6 +185,20 @@ export default class App {
     return component
   }
 
+  _matchRoutes(routes) {
+    const uri = location.pathname
+    for (let route of routes) {
+      if (route.startsWith('/')) {
+        route = route.slice(1)
+      }
+      const pat = new RegExp(`^${this.base_path}${route}$`)
+      if (pat.test(uri)) {
+        return true
+      }
+    }
+    return false
+  }
+
   /* ------------------------------------------------------------ */
   static async move(path, history_record=true) {
     if (path.startsWith('/')) {
@@ -191,9 +206,9 @@ export default class App {
     }
     const app = App.instance
     if (history_record) {
-      history.pushState(`${this.history_prefix}|${path}`, "", `${this.base_path}${path}`)
+      history.pushState(`${app.history_prefix}|${path}`, "", `${app.base_path}${path}`)
     } else {
-      history.replaceState(`${this.history_prefix}|${path}`, "", `${this.base_path}${path}`)
+      history.replaceState(`${app.history_prefix}|${path}`, "", `${app.base_path}${path}`)
     }
     await app.open()
   }
@@ -216,5 +231,6 @@ export default class App {
     const app = App.instance
     return `${app.base_path}${path}`
   }
+
 }
 

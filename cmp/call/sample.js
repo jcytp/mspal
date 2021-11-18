@@ -1,6 +1,6 @@
-import Component from "../mspal/Component.js"
-import API from "../mspal/API.js"
-import DOM from "../mspal/DOM.js"
+import Component from "../../mspal/Component.js"
+import Api from "../../mspal/Api.js"
+import Dom from "../../mspal/Dom.js"
 
 const cmp = new Component()
 
@@ -26,10 +26,10 @@ cmp.addStyle('main.css')
 cmp.addStyle('data-table.css')
 
 /* api call */
-cmp.addApi('get_ghibli_people', new API({
+cmp.addApi('get_ghibli_people', new Api({
   url: 'https://ghibliapi.herokuapp.com/people',
 }))
-cmp.addApi('get_ghibli_film', new API({
+cmp.addApi('get_ghibli_film', new Api({
   url: 'https://ghibliapi.herokuapp.com/films/{film-id}',
   params: ['film-id'],
 }))
@@ -60,20 +60,20 @@ cmp.addClickHandler('btn_ghibli_people', async (ev) => {
     }
     const film_names = new Map(await Promise.all(promise_list))
     // render table
-    const table = DOM.get('#tblGhibliPeople')
+    const table = Dom.get('#tblGhibliPeople')
     table.innerHTML = '<thead><tr><td>name</td><td>gender</td><td>age</td><td>films</td></tr></thead>'
     for (const person of people_data) {
-      table.appendChild(DOM.newElem('TR', (tr) => {
-        tr.appendChild(DOM.newElem('TD', (td) => {
+      table.appendChild(Dom.newElem('TR', (tr) => {
+        tr.appendChild(Dom.newElem('TD', (td) => {
           td.innerText = person.name
         }))
-        tr.appendChild(DOM.newElem('TD', (td) => {
+        tr.appendChild(Dom.newElem('TD', (td) => {
           td.innerText = person.gender
         }))
-        tr.appendChild(DOM.newElem('TD', (td) => {
+        tr.appendChild(Dom.newElem('TD', (td) => {
           td.innerText = person.age
         }))
-        tr.appendChild(DOM.newElem('TD', (td) => {
+        tr.appendChild(Dom.newElem('TD', (td) => {
           td.innerText = person.films.map(film_id => film_names.get(film_id))
         }))
       }))

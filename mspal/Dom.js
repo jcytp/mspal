@@ -30,17 +30,6 @@ export default class Dom {
     return `/${m[1]}`
   }
 
-  static matchRoutes(routes) {
-    const uri = location.pathname
-    for (const route of routes) {
-      const pat = new RegExp(`^${route}$`)
-      if (pat.test(uri)) {
-        return true
-      }
-    }
-    return false
-  }
-
   static mapToObject(map) {
     return [...map].reduce((l,[k,v]) => Object.assign(l, {[k]:v}), {})
   }
