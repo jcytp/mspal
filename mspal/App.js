@@ -65,8 +65,8 @@ export default class App {
   cascadeMessage(component_path, msg, params) {
     const cmp = this.components.get(component_path)
     cmp.receiveMessage(msg, params)
-    const sub_cmp_map = cmp.getSubComponents()
-    for (const [target, sub_cmp] of sub_cmp_map) {
+    const sub_cmp_list = cmp.getSubComponents()
+    for (const sub_cmp of sub_cmp_list) {
       if (Dom.matchRoutes(sub_cmp.routes)) {
         this.cascadeMessage(sub_cmp.path, msg, params)
       }
@@ -151,7 +151,7 @@ export default class App {
             elem.src = path
             elem.async = true
           })
-          document.body.append(elem)
+          document.body.appendChild(elem)
           this.scripts.set(path, elem)
           resolve()
         })
@@ -159,11 +159,11 @@ export default class App {
       }
     }
     //// sub_components
-    const sub_cmp_map = cmp.getSubComponents()
-    for (const [target, subcmp] of sub_cmp_map) {
+    const sub_cmp_list = cmp.getSubComponents()
+    for (const subcmp of sub_cmp_list) {
       if (Dom.matchRoutes(subcmp.routes)) {
-        const promise = _lenderComponent(target, subcmp.path)
-        promise_list.append(promise)
+        const promise = this._lenderComponent(subcmp.target_id, subcmp.path)
+        promise_list.push(promise)
       }
     }
     //// await
@@ -186,11 +186,14 @@ export default class App {
 
   /* ------------------------------------------------------------ */
   static async move(path, history_record=true) {
+    if (path.startsWith('/')) {
+      path = path.slice(1)
+    }
     const app = App.instance
     if (history_record) {
-      history.pushState(`${this.history_prefix}|${path}`, "", `${this.base_path}${pathname}`)
+      history.pushState(`${this.history_prefix}|${path}`, "", `${this.base_path}${path}`)
     } else {
-      history.replaceState(`${this.history_prefix}|${path}`, "", `${this.base_path}${pathname}`)
+      history.replaceState(`${this.history_prefix}|${path}`, "", `${this.base_path}${path}`)
     }
     await app.open()
   }
@@ -207,6 +210,11 @@ export default class App {
   static sendMessage(msg, param) {
     const app = App.instance
     app.cascadeMessage(app.root_component_path, msg, param)
+  }
+
+  static innerPath(path) {
+    const app = App.instance
+    return `${app.base_path}${path}`
   }
 }
 

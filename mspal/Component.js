@@ -6,18 +6,23 @@ export default class Component {
   constructor() {
     this.target_id = null
     this.html = null
-    this.sub_component_map = new Map()
+    this.sub_components = new Array()
     this.style_paths = new Array()
     this.script_paths = new Array()
     this.apis = new Map()
     this.handlers = new Map()
     this.msg_actions = new Map()
+    this.innerLinks = new Map()
   }
   setHtml(html) {
     this.html = html
   }
-  addSubComponent(target_id, path, routes=['/*']) {
-    this.sub_component_map.set(target_id, { path: path, routes: routes })
+  addSubComponent(target_id, path, routes=['/.*']) {
+    this.sub_components.push({
+      target_id: target_id,
+      path: path,
+      routes: routes,
+    })
   }
   addStyle(path) {
     this.style_paths.push(path)
@@ -38,7 +43,7 @@ export default class Component {
     return this.html
   }
   getSubComponents() {
-    return this.sub_component_map
+    return this.sub_components
   }
   getStyles() {
     return this.style_paths
@@ -70,6 +75,8 @@ export default class Component {
     }
   }
   addInnerLink(target_id, link_path, setup=false) {
+    // const link_path = App.innerPath(path)
+    // ToDo: innerLinks.set(target_id, link_path)
     this.addClickHandler(target_id, (ev) => {
       App.move(link_path)
     }, setup)

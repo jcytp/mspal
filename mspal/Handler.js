@@ -8,14 +8,14 @@ export default class Handler {
     this.options = obj.options || {}
   }
   set() {
-    const id_elem = Dom.get(`#${this.target_id}`)
+    const id_elem = Dom.get(`#${this.target}`)
     const elems = id_elem ? [id_elem] : Dom.getList(`.${this.target}`)
     for (const elem of elems) {
       elem.addEventListener(this.type, this.listener, this.options)
     }
   }
   fire() {
-    const id_elem = Dom.get(`#${this.target_id}`)
+    const id_elem = Dom.get(`#${this.target}`)
     const elems = id_elem ? [id_elem] : Dom.getList(`.${this.target}`)
     for (const elem of elems) {
       const ev = new Event(this.type)
