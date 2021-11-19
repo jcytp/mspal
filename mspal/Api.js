@@ -12,7 +12,7 @@ export default class API {
     this.params = obj.params || []
   }
   async call(params_map=null) {
-    console.debug(`### Api.call(params_map) (url: ${this.url}, method: ${this.options.method})`)
+    console.debug(`### Api.call() | ${this.options.method} | ${this.url}`)
     params_map = params_map || new Map()
     //// collect params
     for (const elem_id of this.params) {

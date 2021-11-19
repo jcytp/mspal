@@ -1,6 +1,6 @@
-import Component from "../../mspal/Component.js"
-import Api from "../../mspal/Api.js"
-import Dom from "../../mspal/Dom.js"
+import Component from "../mspal/Component.js"
+import Api from "../mspal/Api.js"
+import Dom from "../mspal/Dom.js"
 
 const cmp = new Component()
 
@@ -35,7 +35,7 @@ cmp.addApi('get_ghibli_film', new Api({
 }))
 
 /* event handler */
-cmp.addClickHandler('btn_ghibli_people', async (ev) => {
+cmp.addClickHandler('btnGhibliPeople', async (ev) => {
   const result = await cmp.callApi('get_ghibli_people')
   const people_data = result ? await result.json() : null
   if (people_data) {

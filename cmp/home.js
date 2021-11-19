@@ -7,7 +7,7 @@ cmp.setHtml(`
   <h2>What's mspal?</h2>
   <p>The "mspal" is Micro SPA Library.</p>
   <ul>
-    <li>This is for those of us who don't want to send heavy files to visitors on thir first load.</li>
+    <li>This is for those of us who don't want to send heavy files to visitors on their first load.</li>
     <li>This is for those of us who don't want to run heavy build processes.</li>
     <li>This is for those of us who don't want to spend time learning a cumbersome framework.</li>
   </ul>
