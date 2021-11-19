@@ -8,7 +8,7 @@ cmp.setHtml(null)
 /* sub components */
 cmp.addSubComponent('header', 'common/header.js')
 cmp.addSubComponent('footer', 'common/footer.js')
-cmp.addSubComponent('main', 'home.js', ['/', '/sample.html'])
+cmp.addSubComponent('main', 'home.js', ['/', '/sample', '/sample.html'])
 cmp.addSubComponent('main', 'call.js', ['/call/sample'])
 cmp.addSubComponent('main', 'points.js', ['/points'])
 
