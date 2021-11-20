@@ -131,7 +131,7 @@ export default class Component {
   receiveMessage(msg, params) {
     const action = this.msg_actions.get(msg)
     if (action) {
-      action.exec(params)
+      action(params)
     }
   }
 }

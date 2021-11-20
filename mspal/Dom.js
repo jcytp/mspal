@@ -14,7 +14,7 @@ export default class Dom {
     return document.querySelector(selector)
   }
   static getList(selector) {
-    return document.querySelectorAll(selector)
+    return Array.from(document.querySelectorAll(selector))
   }
   
   static newElem(tagname, initializer) {
