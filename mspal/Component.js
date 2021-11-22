@@ -17,6 +17,9 @@ export default class Component {
   setHtml(html) {
     this.html = html
   }
+  saveHtml() {
+    this.html = Dom.get(`#${target_id}`).innerHTML
+  }
   addSubComponent(target_id, path, routes=['/.*']) {
     this.sub_components.push({
       target_id: target_id,
