@@ -188,9 +188,6 @@ export default class App {
   _matchRoutes(routes) {
     const uri = location.pathname
     for (let route of routes) {
-      if (route.startsWith('/')) {
-        route = route.slice(1)
-      }
       const pat = new RegExp(`^${this.base_path}${route}$`)
       if (pat.test(uri)) {
         return true

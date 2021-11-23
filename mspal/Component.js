@@ -18,9 +18,25 @@ export default class Component {
     this.html = html
   }
   saveHtml() {
-    this.html = Dom.get(`#${target_id}`).innerHTML
+    this.html = Dom.get(`#${this.target_id}`).innerHTML
   }
-  addSubComponent(target_id, path, routes=['/.*']) {
+  addSubComponent(target_id, path, routes=['*']) {
+    for (let i=0; i<routes.length; i++) {
+      let route = routes[i]
+      // delete slash
+      if (route.startsWith('/')) {
+        route = route.slice(1)
+      }
+      // extract *
+      route = route.replaceAll('*', '.*')
+      // extract {}
+      const brackets_pat = new RegExp('{[^}]*}')
+      let match
+      while ((match = brackets_pat.exec(route)) !== null) {
+        route = route.replace(match[0], '[^/]+')
+      }
+      routes[i] = route
+    }
     this.sub_components.push({
       target_id: target_id,
       path: path,
