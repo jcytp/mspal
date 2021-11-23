@@ -118,7 +118,7 @@ export default class Component {
       params = new Map()
     }
     if (form_id) {
-      const form_data = new FormData(util.id(form_id))
+      const form_data = new FormData(Dom.get(`#${form_id}`))
       for (const pair of form_data.entries()) {
         if (!params.has(pair[0])) {
           params.set(pair[0], pair[1])
