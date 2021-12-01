@@ -51,7 +51,9 @@ export default class App {
       listener: App.page_back_listener,
     })
     this.page_back_handler.set()
-    history.replaceState(`${this.history_prefix}|${document.location.pathname}`, "", document.location.pathname)
+    const url = `${document.location.pathname}${document.location.search}${document.location.hash}`
+    const path = document.location.pathname.slice(this.base_path.length)
+    history.replaceState(`${this.history_prefix}|${path}`, "", url)
     this.open()
   }
 
