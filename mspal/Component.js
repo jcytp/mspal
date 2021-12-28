@@ -82,7 +82,7 @@ export default class Component {
   getMsgAction(msg) {
     return this.msg_actions.get(msg)
   }
-  getValueable(name) {
+  getValuable(name) {
     return this.valuables.get(name)
   }
 
