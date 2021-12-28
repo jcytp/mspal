@@ -12,7 +12,7 @@ export default class Component {
     this.apis = new Map()
     this.handlers = new Map()
     this.msg_actions = new Map()
-    this.innerLinks = new Map()
+    this.valuables = new Map()
   }
   setHtml(html) {
     this.html = html
@@ -58,6 +58,9 @@ export default class Component {
   addMsgAction(msg, action) {
     this.msg_actions.set(msg, action)
   }
+  setValuable(name, value) {
+    this.valuables.set(name, value)
+  }
   getHtml() {
     return this.html
   }
@@ -79,9 +82,12 @@ export default class Component {
   getMsgAction(msg) {
     return this.msg_actions.get(msg)
   }
+  getValueable(name) {
+    return this.valuables.get(name)
+  }
 
   addClickHandler(target_id, func, setup=false) {
-    this.addHandler(`mspal_link_${target_id}`, new Handler({
+    this.addHandler(`mspal_click_${target_id}`, new Handler({
       target: target_id,
       type: 'click',
       listener: (ev) => {
@@ -90,12 +96,10 @@ export default class Component {
       },
     }))
     if (setup) {
-      this.handlers.get(`mspal_link_${target_id}`).set()
+      this.handlers.get(`mspal_click_${target_id}`).set()
     }
   }
   addInnerLink(target_id, link_path, setup=false) {
-    // const link_path = App.innerPath(path)
-    // ToDo: innerLinks.set(target_id, link_path)
     this.addClickHandler(target_id, (ev) => {
       App.move(link_path)
     }, setup)
