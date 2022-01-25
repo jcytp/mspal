@@ -16,6 +16,9 @@ export default class App {
     this.root_component_path = 'root.js'
     this.history_prefix = 'mspal'
     this.unused_classname = 'mspal_unused'
+    this.csrf = false
+    this.csrf_err_code = 8000
+    this.csrf_token_name = 'X-CSRFToken'
     this.components = new Map()
     this.styles = new Map()
     this.scripts = new Map()
@@ -35,6 +38,9 @@ export default class App {
       'root_component_path',
       'history_prefix',
       'unused_classname',
+      'csrf',
+      'csrf_err_code',
+      'csrf_token_name',
     ]
     for (const key of keys) {
       if (settings[key] !== undefined) {
@@ -119,10 +125,12 @@ export default class App {
         this.styles.set(path, null) // reserve
         const promise = new Promise(async (resolve) => {
           const api = new Api({
-            url: `${this.base_path}${this.styles_dir}/${path}`
+            url: `${this.base_path}${this.styles_dir}/${path}`,
+            expect_content_type: 'text',
           })
-          const response = await api.call()
-          const source = await response.text()
+          // const response = await api.call()
+          // const source = await response.text()
+          const source = await api.call()
           const elem = Dom.newElem('STYLE', (elem) => {
             elem.id = `style_${path}`
             elem.innerText = source
@@ -182,6 +190,9 @@ export default class App {
     if (!component) {
       console.error(`[Error] load component error. (${cmp_path})`)
       return
+    }
+    if (this.csrf) {
+      component.activate_csrf(this.csrf_err_code, this.csrf_token_name)
     }
     this.components.set(cmp_path, component)
     return component

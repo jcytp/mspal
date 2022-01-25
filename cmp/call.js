@@ -36,8 +36,7 @@ cmp.addApi('get_ghibli_film', new Api({
 
 /* event handler */
 cmp.addClickHandler('btnGhibliPeople', async (ev) => {
-  const result = await cmp.callApi('get_ghibli_people')
-  const people_data = result ? await result.json() : null
+  const people_data = await cmp.callApi('get_ghibli_people')
   if (people_data) {
     // list up film titles
     const mem_film_id_list = new Array()
@@ -48,10 +47,9 @@ cmp.addClickHandler('btnGhibliPeople', async (ev) => {
         if (!mem_film_id_list.includes(film_id)) {
           mem_film_id_list.push(film_id)
           promise_list.push(new Promise(async (resolve) => {
-            const result = await cmp.callApi('get_ghibli_film', null, new Map([
+            const film_data = await cmp.callApi('get_ghibli_film', null, new Map([
               ['film-id', film_id],
             ]))
-            const film_data = result ? await result.json() : null
             const film_title = film_data ? film_data.title : '-'
             resolve([film_id, film_title])
           }))

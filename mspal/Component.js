@@ -13,6 +13,7 @@ export default class Component {
     this.handlers = new Map()
     this.msg_actions = new Map()
     this.valuables = new Map()
+    this.csrf = null
   }
   setHtml(html) {
     this.html = html
@@ -118,6 +119,14 @@ export default class Component {
     }
   }
 
+  activate_csrf(csrf_err_code, csrf_token_name) {
+    this.csrf = {
+      err_code: csrf_err_code,
+      token_name: csrf_token_name,
+      token: '',
+    }
+  }
+
   lender(target_id) {
     console.debug(`### Component.lender(${target_id})`)
     const elem = Dom.get(`#${target_id}`)
@@ -149,7 +158,21 @@ export default class Component {
     if (api === null) {
       console.error(`[Error] load api error. (${name})`)
     }
-    return await api.call(params)
+    const headers = []
+    if (this.csrf) {
+      headers.push({
+        key: this.csrf.token_name,
+        value: this.csrf.token,
+      })
+    }
+    const result = await api.call(params, headers)
+    if (this.csrf) {
+      if (result.err == this.csrf.err_code) {
+        this.csrf.token = result.data.token
+        return this.callApi(name, form_id, params)
+      }
+    }
+    return result
   }
   receiveMessage(msg, params) {
     const action = this.msg_actions.get(msg)

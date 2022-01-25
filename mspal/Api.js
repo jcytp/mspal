@@ -9,9 +9,10 @@ export default class API {
       cache: 'default',
       credentials: 'same-origin',
     }
+    this.expect_content_type = obj.expect_content_type || 'json'
     this.params = obj.params || []
   }
-  async call(params_map=null) {
+  async call(params_map=null, headers=[]) {
     console.debug(`### Api.call() | ${this.options.method} | ${this.url}`)
     params_map = params_map || new Map()
     //// collect params
@@ -61,11 +62,24 @@ export default class API {
           break
       }
     }
-    //// fetch
-    const response = await fetch(url, this.options)
-    if (!response.ok) {
-      console.error(`[Error] API.call() api response error. (url: ${this.url}, method: ${this.options.method})`)
+    //// set headers
+    this.options.headers = new Headers()
+    for (const header of headers) {
+      this.options.headers.append(header.key, header.value)
     }
-    return response
+    if (this.options.body) {
+      this.options.headers.append("Content-Type", "application/json")
+    }
+    //// fetch
+    const resp = await fetch(url, this.options)
+    //// result
+    if (this.expect_content_type == 'json') {
+      const result = resp.ok ? await resp.json() : { err: 999, msg: `[Error] ${resp.status} ${resp.statusText}` }
+      return result
+    } else if (this.expect_content_type == 'text') {
+      const result = resp.ok ? await resp.text() : `[Error] ${resp.status} ${resp.statusText}`
+      return result
+    }
+    return resp
   }
 }
