@@ -23,6 +23,27 @@ export default class Dom {
     return elem
   }
 
+  static openModal(target_id, block_selector='main >section') {
+    const blocks = Dom.getList(block_selector)
+    for (const block of blocks) {
+      if (block.id == target_id) {
+        block.style.display = "block"
+      } else {
+        block.style.display = "none"
+      }
+    }
+  }
+  static closeModal(modal_class='modal', block_selector='main >section') {
+    const blocks = Dom.getList(block_selector)
+    for (const block of blocks) {
+      if (block.className.split(' ').includes(modal_class)) {
+        block.style.display = "none"
+      } else {
+        block.style.display = "block"
+      }
+    }
+  }
+
   static getUrlPath(url=null) {
     const target_url = url || location.href
     const pat = /^[^:]+:\/\/[^\/]+\/(.*)$/
