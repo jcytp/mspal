@@ -23,27 +23,6 @@ export default class Dom {
     return elem
   }
 
-  static setExpandableNode(node, contract=true) {
-    node.className = contract ? "contracted" : "expanded"
-    node.appendChild(Dom.newElem('SPAN', (sp) => {
-      sp.className = 'btnExpandContract'
-      sp.innerText = contract ? "+" : "-"
-      sp.onclick = contract ? Dom.evExpandNode : Dom.evContractNode
-    }))
-  }
-  static evExpandNode(ev) {
-    ev.stopPropagation()
-    ev.target.parentNode.className = "expanded"
-    ev.target.innerText = "-"
-    ev.target.onclick = Dom.evContractNode
-  }
-  static evContractNode(ev) {
-    ev.stopPropagation()
-    ev.target.parentNode.className = "contracted"
-    ev.target.innerText = "+"
-    ev.target.onclick = Dom.evExpandNode
-  }
-
   static openModal(target_id, block_selector='main >section') {
     const blocks = Dom.getList(block_selector)
     for (const block of blocks) {
