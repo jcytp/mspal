@@ -34,11 +34,13 @@ export default class Dom {
   static evExpandNode(ev) {
     ev.stopPropagation()
     ev.target.parentNode.className = "expanded"
+    sp.innerText = "-"
     ev.target.onclick = Dom.evContractNode
   }
   static evContractNode(ev) {
     ev.stopPropagation()
     ev.target.parentNode.className = "contracted"
+    sp.innerText = "+"
     ev.target.onclick = Dom.evExpandNode
   }
 
