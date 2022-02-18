@@ -27,6 +27,7 @@ export default class Dom {
     node.className = contract ? "contracted" : "expanded"
     node.appendChild(Dom.newElem('SPAN', (sp) => {
       sp.className = 'btnExpandContract'
+      sp.innerText = contract ? "+" : "-"
       sp.onclick = contract ? Dom.evExpandNode : Dom.evContractNode
     }))
   }
